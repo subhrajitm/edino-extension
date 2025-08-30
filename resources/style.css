@@ -112,12 +112,6 @@ body {
     color: var(--vscode-list-activeSelectionForeground);
 }
 
-.action-icon {
-    font-size: 16px;
-    width: 20px;
-    text-align: center;
-}
-
 .action-content {
     flex: 1;
     display: flex;
@@ -162,12 +156,6 @@ body {
 .template-item:hover {
     background: var(--vscode-list-hoverBackground);
     border-color: var(--vscode-focusBorder);
-}
-
-.template-icon {
-    font-size: 16px;
-    width: 20px;
-    text-align: center;
 }
 
 .template-content {
@@ -230,12 +218,6 @@ body {
     border-color: var(--vscode-focusBorder);
 }
 
-.lang-icon {
-    font-size: 16px;
-    width: 20px;
-    text-align: center;
-}
-
 .lang-content {
     flex: 1;
     display: flex;
@@ -257,34 +239,6 @@ body {
     font-size: 14px;
     color: var(--vscode-descriptionForeground);
     opacity: 0.7;
-}
-
-/* Feature List Styles */
-.feature-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.feature-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 12px;
-    border-radius: 6px;
-    background: var(--vscode-list-inactiveSelectionBackground);
-    border: 1px solid var(--vscode-panel-border);
-}
-
-.feature-icon {
-    font-size: 14px;
-    width: 20px;
-    text-align: center;
-}
-
-.feature-text {
-    font-size: 12px;
-    color: var(--vscode-foreground);
 }
 
 /* Footer Styles */
@@ -366,7 +320,6 @@ body {
 .section:nth-child(2) { animation-delay: 0.1s; }
 .section:nth-child(3) { animation-delay: 0.2s; }
 .section:nth-child(4) { animation-delay: 0.3s; }
-.section:nth-child(5) { animation-delay: 0.4s; }
 
 /* Focus States */
 .action-item:focus,

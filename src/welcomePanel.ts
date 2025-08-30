@@ -125,13 +125,13 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                     <!-- Compact Header -->
                     <div class="header-list">
                         <div class="header-title">
-                            <h1>🚀 Edino</h1>
+                            <h1>Edino</h1>
                             <span class="header-subtitle">Project Generator</span>
                         </div>
                         <div class="header-meta">
                             <span class="meta-item">20+ Languages</span>
                             <span class="meta-item">50+ Templates</span>
-                            <span class="meta-item">⚡ Fast</span>
+                            <span class="meta-item">Fast</span>
                         </div>
                     </div>
                     
@@ -140,7 +140,6 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                         <h3 class="section-title">Quick Actions</h3>
                         <div class="action-list">
                             <div class="action-item primary" onclick="createProject()">
-                                <div class="action-icon">⚡</div>
                                 <div class="action-content">
                                     <div class="action-title">Quick Start</div>
                                     <div class="action-desc">Basic templates for common projects</div>
@@ -148,7 +147,6 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                                 <div class="action-arrow">→</div>
                             </div>
                             <div class="action-item secondary" onclick="createAdvancedProject()">
-                                <div class="action-icon">🎯</div>
                                 <div class="action-content">
                                     <div class="action-title">Advanced Templates</div>
                                     <div class="action-desc">Browse 50+ specialized templates</div>
@@ -160,10 +158,9 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
 
                     <!-- Popular Templates List -->
                     <div class="section">
-                        <h3 class="section-title">🔥 Popular Templates</h3>
+                        <h3 class="section-title">Popular Templates</h3>
                         <div class="template-list">
                             <div class="template-item" onclick="createProject('fullstack')">
-                                <div class="template-icon">🚀</div>
                                 <div class="template-content">
                                     <div class="template-title">Full Stack App</div>
                                     <div class="template-stack">React + Node.js + MongoDB</div>
@@ -177,7 +174,6 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                             </div>
                             
                             <div class="template-item" onclick="createProject('frontend')">
-                                <div class="template-icon">🎨</div>
                                 <div class="template-content">
                                     <div class="template-title">Frontend App</div>
                                     <div class="template-stack">React + TypeScript + Vite</div>
@@ -191,7 +187,6 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                             </div>
                             
                             <div class="template-item" onclick="createProject('backend')">
-                                <div class="template-icon">⚙️</div>
                                 <div class="template-content">
                                     <div class="template-title">Backend API</div>
                                     <div class="template-stack">Express + JWT + MongoDB</div>
@@ -208,10 +203,9 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
 
                     <!-- Languages List -->
                     <div class="section">
-                        <h3 class="section-title">🌐 Supported Languages</h3>
+                        <h3 class="section-title">Supported Languages</h3>
                         <div class="language-list">
                             <div class="lang-item" onclick="createAdvancedProject()">
-                                <div class="lang-icon">🐍</div>
                                 <div class="lang-content">
                                     <div class="lang-name">Python</div>
                                     <div class="lang-frameworks">FastAPI, Django, Flask</div>
@@ -219,7 +213,6 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                                 <div class="lang-arrow">→</div>
                             </div>
                             <div class="lang-item" onclick="createAdvancedProject()">
-                                <div class="lang-icon">☕</div>
                                 <div class="lang-content">
                                     <div class="lang-name">Java</div>
                                     <div class="lang-frameworks">Spring Boot, Maven</div>
@@ -227,7 +220,6 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                                 <div class="lang-arrow">→</div>
                             </div>
                             <div class="lang-item" onclick="createAdvancedProject()">
-                                <div class="lang-icon">🦀</div>
                                 <div class="lang-content">
                                     <div class="lang-name">Rust</div>
                                     <div class="lang-frameworks">Actix, Rocket, Cargo</div>
@@ -235,7 +227,6 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                                 <div class="lang-arrow">→</div>
                             </div>
                             <div class="lang-item" onclick="createAdvancedProject()">
-                                <div class="lang-icon">🐹</div>
                                 <div class="lang-content">
                                     <div class="lang-name">Go</div>
                                     <div class="lang-frameworks">Gin, Echo, Fiber</div>
@@ -243,7 +234,6 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                                 <div class="lang-arrow">→</div>
                             </div>
                             <div class="lang-item" onclick="createAdvancedProject()">
-                                <div class="lang-icon">📱</div>
                                 <div class="lang-content">
                                     <div class="lang-name">Mobile</div>
                                     <div class="lang-frameworks">React Native, Flutter</div>
@@ -251,7 +241,6 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                                 <div class="lang-arrow">→</div>
                             </div>
                             <div class="lang-item" onclick="createAdvancedProject()">
-                                <div class="lang-icon">🖥️</div>
                                 <div class="lang-content">
                                     <div class="lang-name">Desktop</div>
                                     <div class="lang-frameworks">Electron, Tauri</div>
@@ -261,42 +250,11 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                         </div>
                     </div>
 
-                    <!-- Features List -->
-                    <div class="section">
-                        <h3 class="section-title">⚡ Features</h3>
-                        <div class="feature-list">
-                            <div class="feature-item">
-                                <div class="feature-icon">📁</div>
-                                <div class="feature-text">Industry Standard Structure</div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">⚡</div>
-                                <div class="feature-text">Pre-configured Setup</div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">🧪</div>
-                                <div class="feature-text">Testing Framework Ready</div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">📚</div>
-                                <div class="feature-text">Auto-generated Docs</div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">🐳</div>
-                                <div class="feature-text">Docker Configuration</div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">🔧</div>
-                                <div class="feature-text">Modern Development Tools</div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Footer -->
                     <div class="footer-list">
                         <div class="footer-links">
-                            <span class="footer-link" onclick="showDocumentation()">📚 Documentation</span>
-                            <span class="footer-link">⭐ GitHub</span>
+                            <span class="footer-link" onclick="showDocumentation()">Documentation</span>
+                            <span class="footer-link">GitHub</span>
                             <span class="footer-version">v1.0.0</span>
                         </div>
                     </div>
