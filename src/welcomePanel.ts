@@ -62,15 +62,22 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
 
         webviewView.webview.onDidReceiveMessage(
             message => {
+                console.log('Received message from webview:', message);
                 switch (message.command) {
                     case 'createProject':
+                        console.log('Executing createProject command');
                         vscode.commands.executeCommand('edino.createProject');
                         return;
                     case 'createAdvancedProject':
+                        console.log('Executing createAdvancedProject command');
                         vscode.commands.executeCommand('edino.createAdvancedProject');
                         return;
                     case 'showDocumentation':
+                        console.log('Executing showDocumentation command');
                         this._showDocumentation();
+                        return;
+                    default:
+                        console.log('Unknown command received:', message.command);
                         return;
                 }
             },
