@@ -60,6 +60,99 @@ body {
     border-radius: 4px;
 }
 
+/* Search Styles */
+.search-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px 32px 8px 12px;
+    border: 1px solid var(--vscode-input-border);
+    border-radius: 6px;
+    background: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.search-input:focus {
+    border-color: var(--vscode-focusBorder);
+}
+
+.search-input::placeholder {
+    color: var(--vscode-input-placeholderForeground);
+}
+
+.search-clear {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--vscode-descriptionForeground);
+    font-size: 14px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.search-clear:hover {
+    background: var(--vscode-list-hoverBackground);
+    color: var(--vscode-foreground);
+}
+
+.search-stats {
+    font-size: 11px;
+    color: var(--vscode-descriptionForeground);
+    padding: 4px 0;
+}
+
+/* No Results Styles */
+.no-results {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.no-results-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 300px;
+}
+
+.no-results-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--vscode-foreground);
+}
+
+.no-results-desc {
+    font-size: 12px;
+    color: var(--vscode-descriptionForeground);
+    line-height: 1.4;
+}
+
+.no-results-action {
+    margin-top: 8px;
+}
+
 /* Section Styles */
 .section {
     display: flex;
@@ -158,6 +251,10 @@ body {
     border-color: var(--vscode-focusBorder);
 }
 
+.template-item.hidden {
+    display: none;
+}
+
 .template-content {
     flex: 1;
     display: flex;
@@ -216,6 +313,10 @@ body {
 .lang-item:hover {
     background: var(--vscode-list-hoverBackground);
     border-color: var(--vscode-focusBorder);
+}
+
+.lang-item.hidden {
+    display: none;
 }
 
 .lang-content {

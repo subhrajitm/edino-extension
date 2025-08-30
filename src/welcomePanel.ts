@@ -135,8 +135,19 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                         </div>
                     </div>
                     
+                    <!-- Search Bar -->
+                    <div class="search-section">
+                        <div class="search-container">
+                            <input type="text" id="searchInput" class="search-input" placeholder="Search templates, languages, frameworks..." />
+                            <div class="search-clear" id="searchClear" style="display: none;">×</div>
+                        </div>
+                        <div class="search-stats" id="searchStats" style="display: none;">
+                            <span id="searchResults">0 results</span>
+                        </div>
+                    </div>
+                    
                     <!-- Quick Actions List -->
-                    <div class="section">
+                    <div class="section" id="quickActionsSection">
                         <h3 class="section-title">Quick Actions</h3>
                         <div class="action-list">
                             <div class="action-item primary" onclick="createProject()">
@@ -157,10 +168,10 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                     </div>
 
                     <!-- Popular Templates List -->
-                    <div class="section">
+                    <div class="section" id="templatesSection">
                         <h3 class="section-title">Popular Templates</h3>
-                        <div class="template-list">
-                            <div class="template-item" onclick="createProject('fullstack')">
+                        <div class="template-list" id="templateList">
+                            <div class="template-item" data-search="full stack react node mongodb" onclick="createProject('fullstack')">
                                 <div class="template-content">
                                     <div class="template-title">Full Stack App</div>
                                     <div class="template-stack">React + Node.js + MongoDB</div>
@@ -173,7 +184,7 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                                 <div class="template-arrow">→</div>
                             </div>
                             
-                            <div class="template-item" onclick="createProject('frontend')">
+                            <div class="template-item" data-search="frontend react typescript vite" onclick="createProject('frontend')">
                                 <div class="template-content">
                                     <div class="template-title">Frontend App</div>
                                     <div class="template-stack">React + TypeScript + Vite</div>
@@ -186,7 +197,7 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                                 <div class="template-arrow">→</div>
                             </div>
                             
-                            <div class="template-item" onclick="createProject('backend')">
+                            <div class="template-item" data-search="backend api express jwt mongodb" onclick="createProject('backend')">
                                 <div class="template-content">
                                     <div class="template-title">Backend API</div>
                                     <div class="template-stack">Express + JWT + MongoDB</div>
@@ -202,50 +213,61 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                     </div>
 
                     <!-- Languages List -->
-                    <div class="section">
+                    <div class="section" id="languagesSection">
                         <h3 class="section-title">Supported Languages</h3>
-                        <div class="language-list">
-                            <div class="lang-item" onclick="createAdvancedProject()">
+                        <div class="language-list" id="languageList">
+                            <div class="lang-item" data-search="python fastapi django flask" onclick="createAdvancedProject()">
                                 <div class="lang-content">
                                     <div class="lang-name">Python</div>
                                     <div class="lang-frameworks">FastAPI, Django, Flask</div>
                                 </div>
                                 <div class="lang-arrow">→</div>
                             </div>
-                            <div class="lang-item" onclick="createAdvancedProject()">
+                            <div class="lang-item" data-search="java spring boot maven" onclick="createAdvancedProject()">
                                 <div class="lang-content">
                                     <div class="lang-name">Java</div>
                                     <div class="lang-frameworks">Spring Boot, Maven</div>
                                 </div>
                                 <div class="lang-arrow">→</div>
                             </div>
-                            <div class="lang-item" onclick="createAdvancedProject()">
+                            <div class="lang-item" data-search="rust actix rocket cargo" onclick="createAdvancedProject()">
                                 <div class="lang-content">
                                     <div class="lang-name">Rust</div>
                                     <div class="lang-frameworks">Actix, Rocket, Cargo</div>
                                 </div>
                                 <div class="lang-arrow">→</div>
                             </div>
-                            <div class="lang-item" onclick="createAdvancedProject()">
+                            <div class="lang-item" data-search="go gin echo fiber" onclick="createAdvancedProject()">
                                 <div class="lang-content">
                                     <div class="lang-name">Go</div>
                                     <div class="lang-frameworks">Gin, Echo, Fiber</div>
                                 </div>
                                 <div class="lang-arrow">→</div>
                             </div>
-                            <div class="lang-item" onclick="createAdvancedProject()">
+                            <div class="lang-item" data-search="mobile react native flutter" onclick="createAdvancedProject()">
                                 <div class="lang-content">
                                     <div class="lang-name">Mobile</div>
                                     <div class="lang-frameworks">React Native, Flutter</div>
                                 </div>
                                 <div class="lang-arrow">→</div>
                             </div>
-                            <div class="lang-item" onclick="createAdvancedProject()">
+                            <div class="lang-item" data-search="desktop electron tauri" onclick="createAdvancedProject()">
                                 <div class="lang-content">
                                     <div class="lang-name">Desktop</div>
                                     <div class="lang-frameworks">Electron, Tauri</div>
                                 </div>
                                 <div class="lang-arrow">→</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- No Results Message -->
+                    <div class="no-results" id="noResults" style="display: none;">
+                        <div class="no-results-content">
+                            <div class="no-results-title">No results found</div>
+                            <div class="no-results-desc">Try searching for different keywords or browse all templates</div>
+                            <div class="no-results-action">
+                                <button class="action-item secondary" onclick="clearSearch()">Clear Search</button>
                             </div>
                         </div>
                     </div>
