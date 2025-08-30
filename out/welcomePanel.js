@@ -122,166 +122,183 @@ class WelcomePanel {
                 <link rel="stylesheet" href="${styleResetUri}">
             </head>
             <body>
-                <div class="welcome-container compact">
-                    <div class="header compact">
-                        <div class="header-main">
+                <div class="welcome-container list-view">
+                    <!-- Compact Header -->
+                    <div class="header-list">
+                        <div class="header-title">
                             <h1>🚀 Edino</h1>
-                            <p>20+ Languages • 50+ Templates • Instant Setup</p>
+                            <span class="header-subtitle">Project Generator</span>
                         </div>
-                        <div class="header-stats">
-                            <div class="stat">
-                                <span class="stat-number">20+</span>
-                                <span class="stat-label">Languages</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-number">50+</span>
-                                <span class="stat-label">Templates</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-number">⚡</span>
-                                <span class="stat-label">Fast</span>
-                            </div>
+                        <div class="header-meta">
+                            <span class="meta-item">20+ Languages</span>
+                            <span class="meta-item">50+ Templates</span>
+                            <span class="meta-item">⚡ Fast</span>
                         </div>
                     </div>
                     
-                    <div class="quick-actions">
-                        <div class="action-row">
-                            <button class="action-btn primary compact" onclick="createProject()">
-                                <span class="btn-icon">⚡</span>
-                                <span class="btn-text">Quick Start</span>
-                                <span class="btn-desc">Basic templates</span>
-                            </button>
-                            <button class="action-btn secondary compact" onclick="createAdvancedProject()">
-                                <span class="btn-icon">🎯</span>
-                                <span class="btn-text">Advanced</span>
-                                <span class="btn-desc">50+ templates</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="templates-grid">
-                        <div class="template-section">
-                            <h3>🔥 Popular</h3>
-                            <div class="template-cards">
-                                <div class="template-card compact" onclick="createProject('fullstack')">
-                                    <div class="template-icon">🚀</div>
-                                    <div class="template-info">
-                                        <h4>Full Stack</h4>
-                                        <p>React + Node + MongoDB</p>
-                                        <div class="template-tags">
-                                            <span class="tag">React</span>
-                                            <span class="tag">Node.js</span>
-                                            <span class="tag">MongoDB</span>
-                                        </div>
-                                    </div>
+                    <!-- Quick Actions List -->
+                    <div class="section">
+                        <h3 class="section-title">Quick Actions</h3>
+                        <div class="action-list">
+                            <div class="action-item primary" onclick="createProject()">
+                                <div class="action-icon">⚡</div>
+                                <div class="action-content">
+                                    <div class="action-title">Quick Start</div>
+                                    <div class="action-desc">Basic templates for common projects</div>
                                 </div>
-                                
-                                <div class="template-card compact" onclick="createProject('frontend')">
-                                    <div class="template-icon">🎨</div>
-                                    <div class="template-info">
-                                        <h4>Frontend</h4>
-                                        <p>React + TypeScript + Vite</p>
-                                        <div class="template-tags">
-                                            <span class="tag">React</span>
-                                            <span class="tag">TypeScript</span>
-                                            <span class="tag">Vite</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="template-card compact" onclick="createProject('backend')">
-                                    <div class="template-icon">⚙️</div>
-                                    <div class="template-info">
-                                        <h4>Backend</h4>
-                                        <p>Express + JWT + MongoDB</p>
-                                        <div class="template-tags">
-                                            <span class="tag">Express</span>
-                                            <span class="tag">JWT</span>
-                                            <span class="tag">MongoDB</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div class="action-arrow">→</div>
                             </div>
-                        </div>
-
-                        <div class="template-section">
-                            <h3>🌐 Languages</h3>
-                            <div class="language-grid compact">
-                                <div class="lang-item" onclick="createAdvancedProject()">
-                                    <span class="lang-icon">🐍</span>
-                                    <span class="lang-name">Python</span>
-                                    <span class="lang-frameworks">FastAPI, Django</span>
+                            <div class="action-item secondary" onclick="createAdvancedProject()">
+                                <div class="action-icon">🎯</div>
+                                <div class="action-content">
+                                    <div class="action-title">Advanced Templates</div>
+                                    <div class="action-desc">Browse 50+ specialized templates</div>
                                 </div>
-                                <div class="lang-item" onclick="createAdvancedProject()">
-                                    <span class="lang-icon">☕</span>
-                                    <span class="lang-name">Java</span>
-                                    <span class="lang-frameworks">Spring Boot</span>
-                                </div>
-                                <div class="lang-item" onclick="createAdvancedProject()">
-                                    <span class="lang-icon">🦀</span>
-                                    <span class="lang-name">Rust</span>
-                                    <span class="lang-frameworks">Actix, Rocket</span>
-                                </div>
-                                <div class="lang-item" onclick="createAdvancedProject()">
-                                    <span class="lang-icon">🐹</span>
-                                    <span class="lang-name">Go</span>
-                                    <span class="lang-frameworks">Gin, Echo</span>
-                                </div>
-                                <div class="lang-item" onclick="createAdvancedProject()">
-                                    <span class="lang-icon">📱</span>
-                                    <span class="lang-name">Mobile</span>
-                                    <span class="lang-frameworks">React Native</span>
-                                </div>
-                                <div class="lang-item" onclick="createAdvancedProject()">
-                                    <span class="lang-icon">🖥️</span>
-                                    <span class="lang-name">Desktop</span>
-                                    <span class="lang-frameworks">Electron</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="template-section">
-                            <h3>⚡ Features</h3>
-                            <div class="features-grid compact">
-                                <div class="feature-item compact">
-                                    <span class="feature-icon">📁</span>
-                                    <span class="feature-text">Industry Standards</span>
-                                </div>
-                                <div class="feature-item compact">
-                                    <span class="feature-icon">⚡</span>
-                                    <span class="feature-text">Pre-configured</span>
-                                </div>
-                                <div class="feature-item compact">
-                                    <span class="feature-icon">🧪</span>
-                                    <span class="feature-text">Testing Ready</span>
-                                </div>
-                                <div class="feature-item compact">
-                                    <span class="feature-icon">📚</span>
-                                    <span class="feature-text">Documentation</span>
-                                </div>
-                                <div class="feature-item compact">
-                                    <span class="feature-icon">🐳</span>
-                                    <span class="feature-text">Docker Ready</span>
-                                </div>
-                                <div class="feature-item compact">
-                                    <span class="feature-icon">🔧</span>
-                                    <span class="feature-text">Modern Tools</span>
-                                </div>
+                                <div class="action-arrow">→</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="footer compact">
-                        <div class="footer-info">
-                            <span class="version">v1.0.0</span>
-                            <span class="separator">•</span>
-                            <span class="docs-link" onclick="showDocumentation()">📚 Docs</span>
-                            <span class="separator">•</span>
-                            <span class="github-link">⭐ GitHub</span>
+                    <!-- Popular Templates List -->
+                    <div class="section">
+                        <h3 class="section-title">🔥 Popular Templates</h3>
+                        <div class="template-list">
+                            <div class="template-item" onclick="createProject('fullstack')">
+                                <div class="template-icon">🚀</div>
+                                <div class="template-content">
+                                    <div class="template-title">Full Stack App</div>
+                                    <div class="template-stack">React + Node.js + MongoDB</div>
+                                    <div class="template-tags">
+                                        <span class="tag">React</span>
+                                        <span class="tag">Node.js</span>
+                                        <span class="tag">MongoDB</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <div class="template-item" onclick="createProject('frontend')">
+                                <div class="template-icon">🎨</div>
+                                <div class="template-content">
+                                    <div class="template-title">Frontend App</div>
+                                    <div class="template-stack">React + TypeScript + Vite</div>
+                                    <div class="template-tags">
+                                        <span class="tag">React</span>
+                                        <span class="tag">TypeScript</span>
+                                        <span class="tag">Vite</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <div class="template-item" onclick="createProject('backend')">
+                                <div class="template-icon">⚙️</div>
+                                <div class="template-content">
+                                    <div class="template-title">Backend API</div>
+                                    <div class="template-stack">Express + JWT + MongoDB</div>
+                                    <div class="template-tags">
+                                        <span class="tag">Express</span>
+                                        <span class="tag">JWT</span>
+                                        <span class="tag">MongoDB</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
                         </div>
-                        <div class="footer-actions">
-                            <button class="footer-btn" onclick="createProject()">🚀 Quick Start</button>
-                            <button class="footer-btn" onclick="createAdvancedProject()">🎯 Browse All</button>
+                    </div>
+
+                    <!-- Languages List -->
+                    <div class="section">
+                        <h3 class="section-title">🌐 Supported Languages</h3>
+                        <div class="language-list">
+                            <div class="lang-item" onclick="createAdvancedProject()">
+                                <div class="lang-icon">🐍</div>
+                                <div class="lang-content">
+                                    <div class="lang-name">Python</div>
+                                    <div class="lang-frameworks">FastAPI, Django, Flask</div>
+                                </div>
+                                <div class="lang-arrow">→</div>
+                            </div>
+                            <div class="lang-item" onclick="createAdvancedProject()">
+                                <div class="lang-icon">☕</div>
+                                <div class="lang-content">
+                                    <div class="lang-name">Java</div>
+                                    <div class="lang-frameworks">Spring Boot, Maven</div>
+                                </div>
+                                <div class="lang-arrow">→</div>
+                            </div>
+                            <div class="lang-item" onclick="createAdvancedProject()">
+                                <div class="lang-icon">🦀</div>
+                                <div class="lang-content">
+                                    <div class="lang-name">Rust</div>
+                                    <div class="lang-frameworks">Actix, Rocket, Cargo</div>
+                                </div>
+                                <div class="lang-arrow">→</div>
+                            </div>
+                            <div class="lang-item" onclick="createAdvancedProject()">
+                                <div class="lang-icon">🐹</div>
+                                <div class="lang-content">
+                                    <div class="lang-name">Go</div>
+                                    <div class="lang-frameworks">Gin, Echo, Fiber</div>
+                                </div>
+                                <div class="lang-arrow">→</div>
+                            </div>
+                            <div class="lang-item" onclick="createAdvancedProject()">
+                                <div class="lang-icon">📱</div>
+                                <div class="lang-content">
+                                    <div class="lang-name">Mobile</div>
+                                    <div class="lang-frameworks">React Native, Flutter</div>
+                                </div>
+                                <div class="lang-arrow">→</div>
+                            </div>
+                            <div class="lang-item" onclick="createAdvancedProject()">
+                                <div class="lang-icon">🖥️</div>
+                                <div class="lang-content">
+                                    <div class="lang-name">Desktop</div>
+                                    <div class="lang-frameworks">Electron, Tauri</div>
+                                </div>
+                                <div class="lang-arrow">→</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Features List -->
+                    <div class="section">
+                        <h3 class="section-title">⚡ Features</h3>
+                        <div class="feature-list">
+                            <div class="feature-item">
+                                <div class="feature-icon">📁</div>
+                                <div class="feature-text">Industry Standard Structure</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">⚡</div>
+                                <div class="feature-text">Pre-configured Setup</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">🧪</div>
+                                <div class="feature-text">Testing Framework Ready</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">📚</div>
+                                <div class="feature-text">Auto-generated Docs</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">🐳</div>
+                                <div class="feature-text">Docker Configuration</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">🔧</div>
+                                <div class="feature-text">Modern Development Tools</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="footer-list">
+                        <div class="footer-links">
+                            <span class="footer-link" onclick="showDocumentation()">📚 Documentation</span>
+                            <span class="footer-link">⭐ GitHub</span>
+                            <span class="footer-version">v1.0.0</span>
                         </div>
                     </div>
                 </div>

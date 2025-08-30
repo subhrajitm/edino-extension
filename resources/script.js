@@ -1,44 +1,31 @@
-// Welcome Screen JavaScript - Ultra Compact & Informative
-const vscode = acquireVsCodeApi();
+// Edino Project Generator - Webview Script
+console.log('🚀 Edino webview script loaded');
 
-function createProject(type = null) {
-    console.log('createProject called with type:', type);
-    // Send message to extension
-    vscode.postMessage({
-        command: 'createProject',
-        type: type
-    });
-}
-
-function createAdvancedProject() {
-    console.log('createAdvancedProject called');
-    // Send message to extension to create advanced project
-    vscode.postMessage({
-        command: 'createAdvancedProject'
-    });
-}
-
-function showDocumentation() {
-    console.log('showDocumentation called');
-    // Send message to extension
-    vscode.postMessage({
-        command: 'showDocumentation'
-    });
-}
-
-// Add click event listeners for all interactive elements
+// DOM Ready
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, setting up compact UI event listeners');
+    console.log('📄 DOM loaded, initializing event handlers');
     
-    // Handle template card clicks
-    const templateCards = document.querySelectorAll('.template-card.compact');
-    console.log('Found template cards:', templateCards.length);
+    // Initialize all interactive elements
+    initializeEventHandlers();
     
-    templateCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-            console.log('Template card clicked');
+    // Add performance monitoring
+    console.log('⚡ Performance: DOM ready in', performance.now(), 'ms');
+});
+
+function initializeEventHandlers() {
+    console.log('🔧 Setting up event handlers');
+    
+    // Action items
+    const actionItems = document.querySelectorAll('.action-item');
+    console.log('📋 Found', actionItems.length, 'action items');
+    
+    actionItems.forEach(item => {
+        item.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
+            
+            const isPrimary = this.classList.contains('primary');
+            console.log('🎯 Action item clicked:', isPrimary ? 'primary' : 'secondary');
             
             // Add visual feedback
             this.style.transform = 'scale(0.98)';
@@ -46,24 +33,58 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.transform = '';
             }, 150);
             
-            // Get project type from card
-            const type = this.querySelector('h4').textContent.toLowerCase();
-            createProject(type);
+            if (isPrimary) {
+                createProject();
+            } else {
+                createAdvancedProject();
+            }
         });
     });
     
-    // Handle language item clicks
-    const langItems = document.querySelectorAll('.lang-item');
-    console.log('Found language items:', langItems.length);
+    // Template items
+    const templateItems = document.querySelectorAll('.template-item');
+    console.log('📋 Found', templateItems.length, 'template items');
     
-    langItems.forEach(item => {
+    templateItems.forEach(item => {
         item.addEventListener('click', function(e) {
-            console.log('Language item clicked');
             e.preventDefault();
             e.stopPropagation();
             
+            console.log('🎯 Template item clicked');
+            
             // Add visual feedback
-            this.style.transform = 'scale(0.95)';
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+            
+            // Extract template type from onclick attribute or default to quick start
+            const onclickAttr = this.getAttribute('onclick');
+            if (onclickAttr && onclickAttr.includes('fullstack')) {
+                createProject('fullstack');
+            } else if (onclickAttr && onclickAttr.includes('frontend')) {
+                createProject('frontend');
+            } else if (onclickAttr && onclickAttr.includes('backend')) {
+                createProject('backend');
+            } else {
+                createProject();
+            }
+        });
+    });
+    
+    // Language items
+    const langItems = document.querySelectorAll('.lang-item');
+    console.log('📋 Found', langItems.length, 'language items');
+    
+    langItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('🎯 Language item clicked');
+            
+            // Add visual feedback
+            this.style.transform = 'scale(0.98)';
             setTimeout(() => {
                 this.style.transform = '';
             }, 150);
@@ -72,183 +93,153 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Handle action button clicks
-    const actionButtons = document.querySelectorAll('.action-btn.compact');
-    console.log('Found action buttons:', actionButtons.length);
+    // Footer links
+    const footerLinks = document.querySelectorAll('.footer-link');
+    console.log('📋 Found', footerLinks.length, 'footer links');
     
-    actionButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            console.log('Action button clicked:', this.textContent);
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Add visual feedback
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 150);
-            
-            // Check button text to determine action
-            const buttonText = this.textContent.toLowerCase();
-            if (buttonText.includes('quick start')) {
-                createProject();
-            } else if (buttonText.includes('advanced')) {
-                createAdvancedProject();
-            }
-        });
-    });
-    
-    // Handle footer button clicks
-    const footerButtons = document.querySelectorAll('.footer-btn');
-    console.log('Found footer buttons:', footerButtons.length);
-    
-    footerButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            console.log('Footer button clicked:', this.textContent);
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Add visual feedback
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 150);
-            
-            // Check button text to determine action
-            const buttonText = this.textContent.toLowerCase();
-            if (buttonText.includes('quick start')) {
-                createProject();
-            } else if (buttonText.includes('browse all')) {
-                createAdvancedProject();
-            }
-        });
-    });
-    
-    // Handle documentation link clicks
-    const docsLinks = document.querySelectorAll('.docs-link');
-    docsLinks.forEach(link => {
+    footerLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            console.log('Documentation link clicked');
             e.preventDefault();
             e.stopPropagation();
-            showDocumentation();
-        });
-    });
-    
-    // Add hover effects for all interactive elements
-    const interactiveElements = document.querySelectorAll('.template-card.compact, .lang-item, .action-btn.compact, .footer-btn, .docs-link');
-    interactiveElements.forEach(element => {
-        element.addEventListener('mouseenter', function() {
-            if (!this.classList.contains('template-card')) {
-                this.style.transform = 'translateY(-1px)';
-            }
-        });
-        
-        element.addEventListener('mouseleave', function() {
-            if (!this.classList.contains('template-card')) {
-                this.style.transform = 'translateY(0)';
+            
+            const text = this.textContent;
+            console.log('🎯 Footer link clicked:', text);
+            
+            if (text.includes('Documentation')) {
+                showDocumentation();
             }
         });
     });
     
-    // Add loading states for better UX
-    function addLoadingState(element) {
-        element.classList.add('loading');
-        element.style.pointerEvents = 'none';
-        
-        setTimeout(() => {
-            element.classList.remove('loading');
-            element.style.pointerEvents = 'auto';
-        }, 2000);
-    }
+    // Remove inline onclick attributes to prevent double-triggering
+    removeInlineOnclicks();
+}
+
+function removeInlineOnclicks() {
+    console.log('🧹 Removing inline onclick attributes');
     
-    // Add success states for feedback
-    function addSuccessState(element) {
-        element.classList.add('success');
-        setTimeout(() => {
-            element.classList.remove('success');
-        }, 1000);
-    }
-    
-    // Enhanced click handlers with loading states
-    const allClickableElements = document.querySelectorAll('.template-card.compact, .lang-item, .action-btn.compact, .footer-btn');
-    allClickableElements.forEach(element => {
-        const originalClickHandler = element.onclick;
-        element.addEventListener('click', function(e) {
-            addLoadingState(this);
-        });
+    const elementsWithOnclick = document.querySelectorAll('[onclick]');
+    elementsWithOnclick.forEach(element => {
+        element.removeAttribute('onclick');
     });
-});
+}
 
-// Handle keyboard navigation for accessibility
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter' || event.key === ' ') {
-        const focusedElement = document.activeElement;
-        if (focusedElement.classList.contains('template-card') || 
-            focusedElement.classList.contains('lang-item') ||
-            focusedElement.classList.contains('action-btn') ||
-            focusedElement.classList.contains('footer-btn') ||
-            focusedElement.classList.contains('docs-link')) {
-            event.preventDefault();
-            focusedElement.click();
-        }
-    }
-});
-
-// Add smooth scrolling for better UX
-document.addEventListener('wheel', function(event) {
-    if (event.deltaY !== 0) {
-        event.preventDefault();
-        const container = document.querySelector('.welcome-container.compact');
-        container.scrollTop += event.deltaY * 0.5;
-    }
-}, { passive: false });
-
-// Add touch support for mobile devices
-let touchStartY = 0;
-let touchEndY = 0;
-
-document.addEventListener('touchstart', function(event) {
-    touchStartY = event.touches[0].clientY;
-});
-
-document.addEventListener('touchend', function(event) {
-    touchEndY = event.changedTouches[0].clientY;
-    handleSwipe();
-});
-
-function handleSwipe() {
-    const swipeThreshold = 50;
-    const diff = touchStartY - touchEndY;
+// Project creation functions
+function createProject(type = 'quick') {
+    console.log('🚀 Creating project:', type);
     
-    if (Math.abs(diff) > swipeThreshold) {
-        const container = document.querySelector('.welcome-container.compact');
-        if (diff > 0) {
-            // Swipe up
-            container.scrollTop += 100;
-        } else {
-            // Swipe down
-            container.scrollTop -= 100;
+    // Add loading state
+    const container = document.querySelector('.welcome-container');
+    if (container) {
+        container.classList.add('loading');
+    }
+    
+    // Send message to extension
+    if (typeof acquireVsCodeApi !== 'undefined') {
+        const vscode = acquireVsCodeApi();
+        vscode.postMessage({
+            command: 'createProject',
+            type: type
+        });
+    } else {
+        console.error('❌ VSCode API not available');
+    }
+    
+    // Remove loading state after a delay
+    setTimeout(() => {
+        if (container) {
+            container.classList.remove('loading');
         }
+    }, 2000);
+}
+
+function createAdvancedProject() {
+    console.log('🎯 Creating advanced project');
+    
+    // Add loading state
+    const container = document.querySelector('.welcome-container');
+    if (container) {
+        container.classList.add('loading');
+    }
+    
+    // Send message to extension
+    if (typeof acquireVsCodeApi !== 'undefined') {
+        const vscode = acquireVsCodeApi();
+        vscode.postMessage({
+            command: 'createAdvancedProject'
+        });
+    } else {
+        console.error('❌ VSCode API not available');
+    }
+    
+    // Remove loading state after a delay
+    setTimeout(() => {
+        if (container) {
+            container.classList.remove('loading');
+        }
+    }, 2000);
+}
+
+function showDocumentation() {
+    console.log('📚 Showing documentation');
+    
+    // Send message to extension
+    if (typeof acquireVsCodeApi !== 'undefined') {
+        const vscode = acquireVsCodeApi();
+        vscode.postMessage({
+            command: 'showDocumentation'
+        });
+    } else {
+        console.error('❌ VSCode API not available');
     }
 }
 
-// Performance optimization: Debounce scroll events
-let scrollTimeout;
-document.addEventListener('scroll', function() {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-        // Handle scroll end
-        console.log('Scroll ended');
-    }, 150);
+// Touch support for mobile devices
+document.addEventListener('touchstart', function(e) {
+    const target = e.target.closest('.action-item, .template-item, .lang-item, .footer-link');
+    if (target) {
+        target.style.opacity = '0.7';
+    }
 });
 
-// Debug function to test if script is loaded
-console.log('Edino ultra-compact welcome panel script loaded successfully');
+document.addEventListener('touchend', function(e) {
+    const target = e.target.closest('.action-item, .template-item, .lang-item, .footer-link');
+    if (target) {
+        target.style.opacity = '';
+    }
+});
 
-// Add performance monitoring
-const startTime = performance.now();
+// Smooth scrolling for better UX
+document.addEventListener('click', function(e) {
+    const target = e.target.closest('.action-item, .template-item, .lang-item');
+    if (target) {
+        target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest'
+        });
+    }
+});
+
+// Performance monitoring
 window.addEventListener('load', function() {
-    const loadTime = performance.now() - startTime;
-    console.log(`Welcome panel loaded in ${loadTime.toFixed(2)}ms`);
+    console.log('⚡ Performance: Page fully loaded in', performance.now(), 'ms');
+    
+    // Log element counts for debugging
+    const actionCount = document.querySelectorAll('.action-item').length;
+    const templateCount = document.querySelectorAll('.template-item').length;
+    const langCount = document.querySelectorAll('.lang-item').length;
+    
+    console.log('📊 UI Elements:', {
+        actions: actionCount,
+        templates: templateCount,
+        languages: langCount
+    });
 });
+
+// Error handling
+window.addEventListener('error', function(e) {
+    console.error('❌ Script error:', e.error);
+});
+
+// Success logging
+console.log('✅ Edino webview script initialized successfully');
