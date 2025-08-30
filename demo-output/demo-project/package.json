@@ -1,0 +1,9 @@
+{
+  "name": "demo-project",
+  "version": "1.0.0",
+  "description": "Demo project",
+  "scripts": {
+    "start": "echo \"Project started!\"",
+    "build": "echo \"Project built!\""
+  }
+}

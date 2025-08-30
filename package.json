@@ -1,0 +1,136 @@
+{
+  "name": "edino-extension",
+  "displayName": "Edino - Project Generator",
+  "description": "Quickly start new coding projects with pre-configured folder structures for Full Stack, Frontend, or Backend development",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:edino.createProject"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "edino.createProject",
+        "title": "Create New Project",
+        "category": "Edino"
+      },
+      {
+        "command": "edino.showWelcome",
+        "title": "Show Welcome Screen",
+        "category": "Edino"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "edino.createProject",
+          "group": "navigation",
+          "when": "explorerResourceIsFolder"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "edino.createProject",
+          "when": "workspaceFolderCount > 0"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "edino.createProject",
+          "when": "workspaceFolderCount > 0",
+          "group": "navigation"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "edino-sidebar",
+          "title": "Edino Project Generator",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "edino-sidebar": [
+        {
+          "id": "edino-welcome",
+          "name": "Welcome",
+          "type": "webview"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "edino-welcome",
+        "contents": "Welcome to Edino Project Generator!\n\n[Create New Project](command:edino.createProject)\n\nQuick Start:\n• Frontend: React applications\n• Backend: Node.js APIs\n• Full Stack: Complete applications\n\n[View Documentation](command:edino.showWelcome)"
+      }
+    ],
+    "welcomePage": {
+      "primary": [
+        {
+          "id": "edino.welcome",
+          "title": "🚀 Create New Project",
+          "description": "Generate a new project with Edino",
+          "command": "edino.createProject",
+          "icon": "resources/icon.svg"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "edino.documentation",
+          "title": "📚 Documentation",
+          "description": "Learn how to use Edino",
+          "command": "edino.showWelcome",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vscode/test-electron": "^2.3.8",
+    "eslint": "^8.0.0",
+    "glob": "^10.3.3",
+    "mocha": "^10.2.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "fs-extra": "^11.1.1"
+  },
+  "publisher": "edino",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/edino-extension.git"
+  },
+  "keywords": [
+    "project",
+    "generator",
+    "fullstack",
+    "frontend",
+    "backend",
+    "react",
+    "node",
+    "express"
+  ]
+}
