@@ -65,7 +65,7 @@ async function activate(context) {
         // Initialize core systems
         await initializeCoreSystems(context);
         // Register the main project creation command
-        let createProjectDisposable = vscode.commands.registerCommand('edino.createProject', async () => {
+        let createProjectDisposable = vscode.commands.registerCommand('edino.createProject', async (templateType) => {
             try {
                 // Show welcome message
                 vscode.window.showInformationMessage('🚀 Welcome to Edino Project Generator! Let\'s create something amazing.');
@@ -143,32 +143,46 @@ async function activate(context) {
                         selectedFolderPath = path.join(workspaceFolder.uri.fsPath, projectName);
                     }
                 }
-                // Show project type selection with better descriptions
-                const projectType = await vscode.window.showQuickPick([
-                    {
-                        label: '🚀 Full Stack',
-                        description: 'Complete web application with frontend and backend',
-                        detail: 'Includes React/Vue frontend + Node.js/Python backend + database',
-                        value: types_1.ProjectType.FULL_STACK
-                    },
-                    {
-                        label: '🎨 Frontend',
-                        description: 'User interface and client-side application',
-                        detail: 'React, Vue, Angular, Svelte with modern build tools',
-                        value: types_1.ProjectType.FRONTEND
-                    },
-                    {
-                        label: '⚙️ Backend',
-                        description: 'Server-side API and business logic',
-                        detail: 'Node.js, Python, Java, Go with database integration',
-                        value: types_1.ProjectType.BACKEND
+                // Determine project type based on template selection or user choice
+                let projectType;
+                if (templateType && ['fullstack', 'frontend', 'backend'].includes(templateType)) {
+                    // Use the specific template type that was clicked
+                    const templateMap = {
+                        'fullstack': { label: '🚀 Full Stack', value: types_1.ProjectType.FULL_STACK },
+                        'frontend': { label: '🎨 Frontend', value: types_1.ProjectType.FRONTEND },
+                        'backend': { label: '⚙️ Backend', value: types_1.ProjectType.BACKEND }
+                    };
+                    projectType = templateMap[templateType];
+                }
+                else {
+                    // Show project type selection with better descriptions
+                    const selectedType = await vscode.window.showQuickPick([
+                        {
+                            label: '🚀 Full Stack',
+                            description: 'Complete web application with frontend and backend',
+                            detail: 'Includes React/Vue frontend + Node.js/Python backend + database',
+                            value: types_1.ProjectType.FULL_STACK
+                        },
+                        {
+                            label: '🎨 Frontend',
+                            description: 'User interface and client-side application',
+                            detail: 'React, Vue, Angular, Svelte with modern build tools',
+                            value: types_1.ProjectType.FRONTEND
+                        },
+                        {
+                            label: '⚙️ Backend',
+                            description: 'Server-side API and business logic',
+                            detail: 'Node.js, Python, Java, Go with database integration',
+                            value: types_1.ProjectType.BACKEND
+                        }
+                    ], {
+                        placeHolder: 'What type of project would you like to create?',
+                        ignoreFocusOut: true
+                    });
+                    if (!selectedType) {
+                        return;
                     }
-                ], {
-                    placeHolder: 'What type of project would you like to create?',
-                    ignoreFocusOut: true
-                });
-                if (!projectType) {
-                    return;
+                    projectType = selectedType;
                 }
                 // Show project summary before creation
                 const projectSummary = `📋 Project Summary:

@@ -75,8 +75,8 @@ class WelcomePanel {
             console.log('Received message from webview:', message);
             switch (message.command) {
                 case 'createProject':
-                    console.log('Executing createProject command');
-                    vscode.commands.executeCommand('edino.createProject');
+                    console.log('Executing createProject command with type:', message.type);
+                    vscode.commands.executeCommand('edino.createProject', message.type);
                     return;
                 case 'createAdvancedProject':
                     console.log('Executing createAdvancedProject command');
