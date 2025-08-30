@@ -1,95 +1,33 @@
-<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background with radial gradient -->
-  <defs>
-    <radialGradient id="backgroundGradient" cx="50%" cy="50%" r="70%">
-      <stop offset="0%" style="stop-color:#2d2d2d;stop-opacity:1" />
-      <stop offset="70%" style="stop-color:#1a1a1a;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#0f0f0f;stop-opacity:1" />
-    </radialGradient>
-    
-    <!-- Glow effect for logo elements -->
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-      <feMerge> 
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    
-    <!-- Logo color gradient -->
-    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#4a9eff;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#2d7dd2;stop-opacity:1" />
-    </linearGradient>
-    
-    <!-- Glow color gradient -->
-    <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#7bb3ff;stop-opacity:0.8" />
-      <stop offset="100%" style="stop-color:#4a9eff;stop-opacity:0.6" />
-    </linearGradient>
-  </defs>
-  
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <!-- Background -->
-  <rect width="128" height="128" fill="url(#backgroundGradient)" rx="16"/>
+  <rect width="24" height="24" rx="4" fill="#1a1a1a"/>
   
-  <!-- Logo Group with glow effect -->
-  <g filter="url(#glow)" transform="translate(24, 24)">
-    
-    <!-- Upper-left open square (stylized 'L' or 'C') -->
-    <path d="M 20 20 L 20 40 L 40 40" 
-          stroke="url(#logoGradient)" 
-          stroke-width="4" 
-          fill="none" 
-          stroke-linecap="round" 
-          stroke-linejoin="round"/>
-    
-    <!-- Central diagonal lines -->
-    <path d="M 60 25 L 45 45" 
-          stroke="url(#logoGradient)" 
-          stroke-width="5" 
-          fill="none" 
-          stroke-linecap="round"/>
-    <path d="M 65 20 L 50 40" 
-          stroke="url(#logoGradient)" 
-          stroke-width="5" 
-          fill="none" 
-          stroke-linecap="round"/>
-    
-    <!-- Large open curve (D-shaped) -->
-    <path d="M 45 45 Q 70 45 70 70 Q 70 95 45 95" 
-          stroke="url(#logoGradient)" 
-          stroke-width="4" 
-          fill="none" 
-          stroke-linecap="round"/>
-    
-    <!-- Additional glow layer for enhanced effect -->
-    <path d="M 20 20 L 20 40 L 40 40" 
-          stroke="url(#glowGradient)" 
-          stroke-width="6" 
-          fill="none" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          opacity="0.6"/>
-    <path d="M 60 25 L 45 45" 
-          stroke="url(#glowGradient)" 
-          stroke-width="7" 
-          fill="none" 
-          stroke-linecap="round" 
-          opacity="0.6"/>
-    <path d="M 65 20 L 50 40" 
-          stroke="url(#glowGradient)" 
-          stroke-width="7" 
-          fill="none" 
-          stroke-linecap="round" 
-          opacity="0.6"/>
-    <path d="M 45 45 Q 70 45 70 70 Q 70 95 45 95" 
-          stroke="url(#glowGradient)" 
-          stroke-width="6" 
-          fill="none" 
-          stroke-linecap="round" 
-          opacity="0.6"/>
-  </g>
+  <!-- Logo elements - ultra-simplified for VS Code compatibility -->
   
-  <!-- Subtle inner glow for depth -->
-  <circle cx="64" cy="64" r="50" fill="none" stroke="url(#glowGradient)" stroke-width="1" opacity="0.3"/>
+  <!-- Upper-left open square (stylized 'L') -->
+  <path d="M 5 5 L 5 9 L 9 9" 
+        stroke="#4a9eff" 
+        stroke-width="1.5" 
+        fill="none" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  
+  <!-- Central diagonal lines -->
+  <path d="M 13 6 L 10 10" 
+        stroke="#4a9eff" 
+        stroke-width="1.5" 
+        fill="none" 
+        stroke-linecap="round"/>
+  <path d="M 14 5 L 11 9" 
+        stroke="#4a9eff" 
+        stroke-width="1.5" 
+        fill="none" 
+        stroke-linecap="round"/>
+  
+  <!-- Large open curve (D-shaped) -->
+  <path d="M 10 10 Q 15 10 15 15 Q 15 20 10 20" 
+        stroke="#4a9eff" 
+        stroke-width="1.5" 
+        fill="none" 
+        stroke-linecap="round"/>
 </svg>
