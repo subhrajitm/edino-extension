@@ -27,8 +27,8 @@ function initializeEventHandlers() {
             e.preventDefault();
             e.stopPropagation();
             
-            const isPrimary = this.classList.contains('primary');
-            console.log('🎯 Action item clicked:', isPrimary ? 'primary' : 'secondary');
+            const action = this.getAttribute('data-action');
+            console.log('🎯 Action item clicked:', action);
             
             // Add visual feedback
             this.style.transform = 'scale(0.98)';
@@ -36,10 +36,12 @@ function initializeEventHandlers() {
                 this.style.transform = '';
             }, 150);
             
-            if (isPrimary) {
+            if (action === 'quick') {
                 createProject();
-            } else {
+            } else if (action === 'advanced') {
                 createAdvancedProject();
+            } else if (action === 'clear-search') {
+                clearSearch();
             }
         });
     });
@@ -53,7 +55,8 @@ function initializeEventHandlers() {
             e.preventDefault();
             e.stopPropagation();
             
-            console.log('🎯 Template item clicked');
+            const templateType = this.getAttribute('data-template');
+            console.log('🎯 Template item clicked:', templateType);
             
             // Add visual feedback
             this.style.transform = 'scale(0.98)';
@@ -61,14 +64,8 @@ function initializeEventHandlers() {
                 this.style.transform = '';
             }, 150);
             
-            // Extract template type from onclick attribute or default to quick start
-            const onclickAttr = this.getAttribute('onclick');
-            if (onclickAttr && onclickAttr.includes('fullstack')) {
-                createProject('fullstack');
-            } else if (onclickAttr && onclickAttr.includes('frontend')) {
-                createProject('frontend');
-            } else if (onclickAttr && onclickAttr.includes('backend')) {
-                createProject('backend');
+            if (templateType) {
+                createProject(templateType);
             } else {
                 createProject();
             }
@@ -84,7 +81,8 @@ function initializeEventHandlers() {
             e.preventDefault();
             e.stopPropagation();
             
-            console.log('🎯 Language item clicked');
+            const action = this.getAttribute('data-action');
+            console.log('🎯 Language item clicked:', action);
             
             // Add visual feedback
             this.style.transform = 'scale(0.98)';
@@ -92,7 +90,9 @@ function initializeEventHandlers() {
                 this.style.transform = '';
             }, 150);
             
-            createAdvancedProject();
+            if (action === 'advanced') {
+                createAdvancedProject();
+            }
         });
     });
     
@@ -105,17 +105,14 @@ function initializeEventHandlers() {
             e.preventDefault();
             e.stopPropagation();
             
-            const text = this.textContent;
-            console.log('🎯 Footer link clicked:', text);
+            const action = this.getAttribute('data-action');
+            console.log('🎯 Footer link clicked:', action);
             
-            if (text.includes('Documentation')) {
+            if (action === 'documentation') {
                 showDocumentation();
             }
         });
     });
-    
-    // Remove inline onclick attributes to prevent double-triggering
-    removeInlineOnclicks();
 }
 
 function initializeSearch() {
@@ -274,14 +271,7 @@ function clearSearch() {
     }
 }
 
-function removeInlineOnclicks() {
-    console.log('🧹 Removing inline onclick attributes');
-    
-    const elementsWithOnclick = document.querySelectorAll('[onclick]');
-    elementsWithOnclick.forEach(element => {
-        element.removeAttribute('onclick');
-    });
-}
+
 
 // Project creation functions
 function createProject(type = 'quick') {

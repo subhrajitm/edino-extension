@@ -150,14 +150,14 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                     <div class="section" id="quickActionsSection">
                         <h3 class="section-title">Quick Actions</h3>
                         <div class="action-list">
-                            <div class="action-item primary" onclick="createProject()">
+                            <div class="action-item primary" data-action="quick">
                                 <div class="action-content">
                                     <div class="action-title">Quick Start</div>
                                     <div class="action-desc">Basic templates for common projects</div>
                                 </div>
                                 <div class="action-arrow">→</div>
                             </div>
-                            <div class="action-item secondary" onclick="createAdvancedProject()">
+                            <div class="action-item secondary" data-action="advanced">
                                 <div class="action-content">
                                     <div class="action-title">Advanced Templates</div>
                                     <div class="action-desc">Browse 50+ specialized templates</div>
@@ -171,7 +171,7 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                     <div class="section" id="templatesSection">
                         <h3 class="section-title">Popular Templates</h3>
                         <div class="template-list" id="templateList">
-                            <div class="template-item" data-search="full stack react node mongodb" onclick="createProject('fullstack')">
+                            <div class="template-item" data-search="full stack react node mongodb" data-template="fullstack">
                                 <div class="template-content">
                                     <div class="template-title">Full Stack App</div>
                                     <div class="template-stack">React + Node.js + MongoDB</div>
@@ -184,7 +184,7 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                                 <div class="template-arrow">→</div>
                             </div>
                             
-                            <div class="template-item" data-search="frontend react typescript vite" onclick="createProject('frontend')">
+                            <div class="template-item" data-search="frontend react typescript vite" data-template="frontend">
                                 <div class="template-content">
                                     <div class="template-title">Frontend App</div>
                                     <div class="template-stack">React + TypeScript + Vite</div>
@@ -197,7 +197,7 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                                 <div class="template-arrow">→</div>
                             </div>
                             
-                            <div class="template-item" data-search="backend api express jwt mongodb" onclick="createProject('backend')">
+                            <div class="template-item" data-search="backend api express jwt mongodb" data-template="backend">
                                 <div class="template-content">
                                     <div class="template-title">Backend API</div>
                                     <div class="template-stack">Express + JWT + MongoDB</div>
@@ -216,42 +216,42 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                     <div class="section" id="languagesSection">
                         <h3 class="section-title">Supported Languages</h3>
                         <div class="language-list" id="languageList">
-                            <div class="lang-item" data-search="python fastapi django flask" onclick="createAdvancedProject()">
+                            <div class="lang-item" data-search="python fastapi django flask" data-action="advanced">
                                 <div class="lang-content">
                                     <div class="lang-name">Python</div>
                                     <div class="lang-frameworks">FastAPI, Django, Flask</div>
                                 </div>
                                 <div class="lang-arrow">→</div>
                             </div>
-                            <div class="lang-item" data-search="java spring boot maven" onclick="createAdvancedProject()">
+                            <div class="lang-item" data-search="java spring boot maven" data-action="advanced">
                                 <div class="lang-content">
                                     <div class="lang-name">Java</div>
                                     <div class="lang-frameworks">Spring Boot, Maven</div>
                                 </div>
                                 <div class="lang-arrow">→</div>
                             </div>
-                            <div class="lang-item" data-search="rust actix rocket cargo" onclick="createAdvancedProject()">
+                            <div class="lang-item" data-search="rust actix rocket cargo" data-action="advanced">
                                 <div class="lang-content">
                                     <div class="lang-name">Rust</div>
                                     <div class="lang-frameworks">Actix, Rocket, Cargo</div>
                                 </div>
                                 <div class="lang-arrow">→</div>
                             </div>
-                            <div class="lang-item" data-search="go gin echo fiber" onclick="createAdvancedProject()">
+                            <div class="lang-item" data-search="go gin echo fiber" data-action="advanced">
                                 <div class="lang-content">
                                     <div class="lang-name">Go</div>
                                     <div class="lang-frameworks">Gin, Echo, Fiber</div>
                                 </div>
                                 <div class="lang-arrow">→</div>
                             </div>
-                            <div class="lang-item" data-search="mobile react native flutter" onclick="createAdvancedProject()">
+                            <div class="lang-item" data-search="mobile react native flutter" data-action="advanced">
                                 <div class="lang-content">
                                     <div class="lang-name">Mobile</div>
                                     <div class="lang-frameworks">React Native, Flutter</div>
                                 </div>
                                 <div class="lang-arrow">→</div>
                             </div>
-                            <div class="lang-item" data-search="desktop electron tauri" onclick="createAdvancedProject()">
+                            <div class="lang-item" data-search="desktop electron tauri" data-action="advanced">
                                 <div class="lang-content">
                                     <div class="lang-name">Desktop</div>
                                     <div class="lang-frameworks">Electron, Tauri</div>
@@ -267,7 +267,7 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                             <div class="no-results-title">No results found</div>
                             <div class="no-results-desc">Try searching for different keywords or browse all templates</div>
                             <div class="no-results-action">
-                                <button class="action-item secondary" onclick="clearSearch()">Clear Search</button>
+                                <button class="action-item secondary" data-action="clear-search">Clear Search</button>
                             </div>
                         </div>
                     </div>
@@ -275,7 +275,7 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                     <!-- Footer -->
                     <div class="footer-list">
                         <div class="footer-links">
-                            <span class="footer-link" onclick="showDocumentation()">Documentation</span>
+                            <span class="footer-link" data-action="documentation">Documentation</span>
                             <span class="footer-link">GitHub</span>
                             <span class="footer-version">v1.0.0</span>
                         </div>
