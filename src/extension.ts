@@ -33,7 +33,7 @@ export async function activate(context: vscode.ExtensionContext) {
         await initializeCoreSystems(context);
 
         // Register the main project creation command
-        let createProjectDisposable = vscode.commands.registerCommand('edino.createProject', async (templateType?: string) => {
+        let createProjectDisposable = vscode.commands.registerCommand('edino.createProject', async (templateType?: string, templateInfo?: any) => {
             try {
                 // Show welcome message
                 vscode.window.showInformationMessage('🚀 Welcome to Edino Project Generator! Let\'s create something amazing.');

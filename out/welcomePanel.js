@@ -75,8 +75,8 @@ class WelcomePanel {
             console.log('Received message from webview:', message);
             switch (message.command) {
                 case 'createProject':
-                    console.log('Executing createProject command with type:', message.type);
-                    vscode.commands.executeCommand('edino.createProject', message.type);
+                    console.log('Executing createProject command with type:', message.type, 'and template info:', message.templateInfo);
+                    vscode.commands.executeCommand('edino.createProject', message.type, message.templateInfo);
                     return;
                 case 'createAdvancedProject':
                     console.log('Executing createAdvancedProject command');
@@ -168,27 +168,15 @@ class WelcomePanel {
                         </div>
                     </div>
 
-                    <!-- Popular Templates List -->
+                    <!-- All Templates List -->
                     <div class="section" id="templatesSection">
-                        <h3 class="section-title">Popular Templates</h3>
+                        <h3 class="section-title">All Templates</h3>
                         <div class="template-list" id="templateList">
-                            <div class="template-item" data-search="full stack react node mongodb" data-template="fullstack">
+                            <!-- Frontend Templates -->
+                            <div class="template-item" data-search="frontend react typescript vite tailwind" data-template="frontend" data-language="typescript" data-framework="react">
                                 <div class="template-content">
-                                    <div class="template-title">Full Stack App</div>
-                                    <div class="template-stack">React + Node.js + MongoDB</div>
-                                    <div class="template-tags">
-                                        <span class="tag">React</span>
-                                        <span class="tag">Node.js</span>
-                                        <span class="tag">MongoDB</span>
-                                    </div>
-                                </div>
-                                <div class="template-arrow">→</div>
-                            </div>
-                            
-                            <div class="template-item" data-search="frontend react typescript vite" data-template="frontend">
-                                <div class="template-content">
-                                    <div class="template-title">Frontend App</div>
-                                    <div class="template-stack">React + TypeScript + Vite</div>
+                                    <div class="template-title">React App</div>
+                                    <div class="template-stack">React + TypeScript + Vite + Tailwind</div>
                                     <div class="template-tags">
                                         <span class="tag">React</span>
                                         <span class="tag">TypeScript</span>
@@ -198,14 +186,190 @@ class WelcomePanel {
                                 <div class="template-arrow">→</div>
                             </div>
                             
-                            <div class="template-item" data-search="backend api express jwt mongodb" data-template="backend">
+                            <div class="template-item" data-search="frontend vue typescript vite pinia" data-template="frontend" data-language="typescript" data-framework="vue">
                                 <div class="template-content">
-                                    <div class="template-title">Backend API</div>
-                                    <div class="template-stack">Express + JWT + MongoDB</div>
+                                    <div class="template-title">Vue.js App</div>
+                                    <div class="template-stack">Vue 3 + TypeScript + Vite + Pinia</div>
+                                    <div class="template-tags">
+                                        <span class="tag">Vue</span>
+                                        <span class="tag">TypeScript</span>
+                                        <span class="tag">Vite</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <div class="template-item" data-search="frontend angular typescript standalone" data-template="frontend" data-language="typescript" data-framework="angular">
+                                <div class="template-content">
+                                    <div class="template-title">Angular App</div>
+                                    <div class="template-stack">Angular 17+ + Standalone Components</div>
+                                    <div class="template-tags">
+                                        <span class="tag">Angular</span>
+                                        <span class="tag">TypeScript</span>
+                                        <span class="tag">RxJS</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <div class="template-item" data-search="frontend svelte sveltekit typescript" data-template="frontend" data-language="typescript" data-framework="svelte">
+                                <div class="template-content">
+                                    <div class="template-title">Svelte App</div>
+                                    <div class="template-stack">Svelte + SvelteKit + TypeScript</div>
+                                    <div class="template-tags">
+                                        <span class="tag">Svelte</span>
+                                        <span class="tag">TypeScript</span>
+                                        <span class="tag">SvelteKit</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <!-- Backend Templates -->
+                            <div class="template-item" data-search="backend nodejs express typescript mongodb jwt" data-template="backend" data-language="typescript" data-framework="express">
+                                <div class="template-content">
+                                    <div class="template-title">Node.js API</div>
+                                    <div class="template-stack">Express + TypeScript + MongoDB + JWT</div>
                                     <div class="template-tags">
                                         <span class="tag">Express</span>
-                                        <span class="tag">JWT</span>
+                                        <span class="tag">TypeScript</span>
                                         <span class="tag">MongoDB</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <div class="template-item" data-search="backend nestjs typescript postgresql typeorm" data-template="backend" data-language="typescript" data-framework="nestjs">
+                                <div class="template-content">
+                                    <div class="template-title">NestJS API</div>
+                                    <div class="template-stack">NestJS + TypeScript + PostgreSQL</div>
+                                    <div class="template-tags">
+                                        <span class="tag">NestJS</span>
+                                        <span class="tag">TypeScript</span>
+                                        <span class="tag">PostgreSQL</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <div class="template-item" data-search="backend python fastapi sqlalchemy postgresql" data-template="backend" data-language="python" data-framework="fastapi">
+                                <div class="template-content">
+                                    <div class="template-title">Python FastAPI</div>
+                                    <div class="template-stack">FastAPI + SQLAlchemy + PostgreSQL</div>
+                                    <div class="template-tags">
+                                        <span class="tag">FastAPI</span>
+                                        <span class="tag">Python</span>
+                                        <span class="tag">PostgreSQL</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <div class="template-item" data-search="backend java spring boot mysql jpa" data-template="backend" data-language="java" data-framework="spring">
+                                <div class="template-content">
+                                    <div class="template-title">Spring Boot API</div>
+                                    <div class="template-stack">Spring Boot + Java + MySQL</div>
+                                    <div class="template-tags">
+                                        <span class="tag">Spring</span>
+                                        <span class="tag">Java</span>
+                                        <span class="tag">MySQL</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <!-- Full Stack Templates -->
+                            <div class="template-item" data-search="fullstack react nodejs typescript mongodb" data-template="fullstack" data-language="typescript" data-framework="react">
+                                <div class="template-content">
+                                    <div class="template-title">React + Node.js Full Stack</div>
+                                    <div class="template-stack">React + Node.js + TypeScript + MongoDB</div>
+                                    <div class="template-tags">
+                                        <span class="tag">React</span>
+                                        <span class="tag">Node.js</span>
+                                        <span class="tag">MongoDB</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <!-- Mobile Templates -->
+                            <div class="template-item" data-search="mobile react native typescript navigation" data-template="mobile" data-language="typescript" data-framework="react-native">
+                                <div class="template-content">
+                                    <div class="template-title">React Native App</div>
+                                    <div class="template-stack">React Native + TypeScript + Navigation</div>
+                                    <div class="template-tags">
+                                        <span class="tag">React Native</span>
+                                        <span class="tag">TypeScript</span>
+                                        <span class="tag">Mobile</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <div class="template-item" data-search="mobile flutter dart state management" data-template="mobile" data-language="dart" data-framework="flutter">
+                                <div class="template-content">
+                                    <div class="template-title">Flutter App</div>
+                                    <div class="template-stack">Flutter + Dart + State Management</div>
+                                    <div class="template-tags">
+                                        <span class="tag">Flutter</span>
+                                        <span class="tag">Dart</span>
+                                        <span class="tag">Mobile</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <!-- Desktop Templates -->
+                            <div class="template-item" data-search="desktop electron react typescript" data-template="desktop" data-language="typescript" data-framework="electron">
+                                <div class="template-content">
+                                    <div class="template-title">Electron App</div>
+                                    <div class="template-stack">Electron + React + TypeScript</div>
+                                    <div class="template-tags">
+                                        <span class="tag">Electron</span>
+                                        <span class="tag">React</span>
+                                        <span class="tag">Desktop</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <!-- Library Templates -->
+                            <div class="template-item" data-search="library typescript rollup testing" data-template="library" data-language="typescript">
+                                <div class="template-content">
+                                    <div class="template-title">TypeScript Library</div>
+                                    <div class="template-stack">TypeScript + Rollup + Testing</div>
+                                    <div class="template-tags">
+                                        <span class="tag">TypeScript</span>
+                                        <span class="tag">Rollup</span>
+                                        <span class="tag">Library</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <!-- CLI Templates -->
+                            <div class="template-item" data-search="cli nodejs typescript commander" data-template="cli" data-language="typescript">
+                                <div class="template-content">
+                                    <div class="template-title">Node.js CLI</div>
+                                    <div class="template-stack">TypeScript + Commander.js + Testing</div>
+                                    <div class="template-tags">
+                                        <span class="tag">Node.js</span>
+                                        <span class="tag">CLI</span>
+                                        <span class="tag">TypeScript</span>
+                                    </div>
+                                </div>
+                                <div class="template-arrow">→</div>
+                            </div>
+                            
+                            <!-- AI/ML Templates -->
+                            <div class="template-item" data-search="ai ml python numpy pandas scikit" data-template="ai-ml" data-language="python">
+                                <div class="template-content">
+                                    <div class="template-title">Python AI/ML</div>
+                                    <div class="template-stack">NumPy + Pandas + Scikit-learn</div>
+                                    <div class="template-tags">
+                                        <span class="tag">Python</span>
+                                        <span class="tag">AI/ML</span>
+                                        <span class="tag">Data Science</span>
                                     </div>
                                 </div>
                                 <div class="template-arrow">→</div>

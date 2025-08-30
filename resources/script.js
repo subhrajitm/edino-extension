@@ -56,7 +56,11 @@ function initializeEventHandlers() {
             e.stopPropagation();
             
             const templateType = this.getAttribute('data-template');
-            console.log('🎯 Template item clicked:', templateType);
+            const language = this.getAttribute('data-language');
+            const framework = this.getAttribute('data-framework');
+            const title = this.querySelector('.template-title')?.textContent || '';
+            
+            console.log('🎯 Template item clicked:', { templateType, language, framework, title });
             
             // Add visual feedback
             this.style.transform = 'scale(0.98)';
@@ -65,7 +69,7 @@ function initializeEventHandlers() {
             }, 150);
             
             if (templateType) {
-                createProject(templateType);
+                createProject(templateType, { language, framework, title });
             } else {
                 createProject();
             }
@@ -274,8 +278,8 @@ function clearSearch() {
 
 
 // Project creation functions
-function createProject(type = 'quick') {
-    console.log('🚀 Creating project:', type);
+function createProject(type = 'quick', templateInfo = {}) {
+    console.log('🚀 Creating project:', type, templateInfo);
     
     // Add loading state
     const container = document.querySelector('.welcome-container');
@@ -288,7 +292,8 @@ function createProject(type = 'quick') {
         const vscode = acquireVsCodeApi();
         vscode.postMessage({
             command: 'createProject',
-            type: type
+            type: type,
+            templateInfo: templateInfo
         });
     } else {
         console.error('❌ VSCode API not available');
