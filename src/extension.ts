@@ -21,13 +21,22 @@ export function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            // Check if a folder is selected in the explorer
+            // Smart folder detection
             const activeTextEditor = vscode.window.activeTextEditor;
             let selectedFolderPath: string | undefined;
             let projectName: string | undefined;
             let isFolderSelected = false;
 
-            if (activeTextEditor) {
+            // Check if we're already in a subfolder of the workspace
+            const currentFolder = workspaceFolder.uri.fsPath;
+            const currentFolderName = path.basename(currentFolder);
+
+            // If we're not in the root workspace folder, use the current folder
+            if (currentFolderName !== workspaceFolder.name) {
+                selectedFolderPath = currentFolder;
+                projectName = currentFolderName;
+                isFolderSelected = true;
+            } else if (activeTextEditor) {
                 // Get the folder containing the active file
                 const activeFilePath = activeTextEditor.document.uri.fsPath;
                 const activeFolderPath = path.dirname(activeFilePath);
@@ -260,13 +269,22 @@ export function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            // Check if a folder is selected in the explorer
+            // Smart folder detection
             const activeTextEditor = vscode.window.activeTextEditor;
             let selectedFolderPath: string | undefined;
             let projectName: string | undefined;
             let isFolderSelected = false;
 
-            if (activeTextEditor) {
+            // Check if we're already in a subfolder of the workspace
+            const currentFolder = workspaceFolder.uri.fsPath;
+            const currentFolderName = path.basename(currentFolder);
+
+            // If we're not in the root workspace folder, use the current folder
+            if (currentFolderName !== workspaceFolder.name) {
+                selectedFolderPath = currentFolder;
+                projectName = currentFolderName;
+                isFolderSelected = true;
+            } else if (activeTextEditor) {
                 // Get the folder containing the active file
                 const activeFilePath = activeTextEditor.document.uri.fsPath;
                 const activeFolderPath = path.dirname(activeFilePath);
@@ -279,74 +297,63 @@ export function activate(context: vscode.ExtensionContext) {
                 }
             }
 
-            // If no folder is selected, check if we're already in a folder
+            // If no folder is selected, provide better guidance
             if (!selectedFolderPath) {
-                // Check if we're already in a subfolder of the workspace
-                const currentFolder = workspaceFolder.uri.fsPath;
-                const currentFolderName = path.basename(currentFolder);
-                
-                // If we're not in the root workspace folder, use the current folder
-                if (currentFolderName !== workspaceFolder.name) {
-                    selectedFolderPath = currentFolder;
-                    projectName = currentFolderName;
-                    isFolderSelected = true;
-                } else {
-                    // Only ask for folder selection if we're in the root workspace
-                    const folderChoice = await vscode.window.showQuickPick(
-                        [
-                            { label: '📁 Select a folder', description: 'Choose an existing folder for your project', value: 'select' },
-                            { label: '🆕 Create new folder', description: 'Create a new folder with custom name', value: 'create' }
-                        ],
-                        {
-                            placeHolder: 'How would you like to set up your project location?',
-                            ignoreFocusOut: true
-                        }
-                    );
+                // Only ask for folder selection if we're in the root workspace
+                const folderChoice = await vscode.window.showQuickPick(
+                    [
+                        { label: '📁 Select a folder', description: 'Choose an existing folder for your project', value: 'select' },
+                        { label: '🆕 Create new folder', description: 'Create a new folder with custom name', value: 'create' }
+                    ],
+                    {
+                        placeHolder: 'How would you like to set up your project location?',
+                        ignoreFocusOut: true
+                    }
+                );
 
-                    if (!folderChoice) {
+                if (!folderChoice) {
+                    return;
+                }
+
+                if (folderChoice.value === 'select') {
+                    const selectedItems = await vscode.window.showOpenDialog({
+                        canSelectFiles: false,
+                        canSelectFolders: true,
+                        canSelectMany: false,
+                        openLabel: 'Select Project Folder',
+                        title: 'Choose the folder where you want to create your project'
+                    });
+
+                    if (selectedItems && selectedItems.length > 0) {
+                        selectedFolderPath = selectedItems[0].fsPath;
+                        projectName = path.basename(selectedFolderPath);
+                        isFolderSelected = true;
+                    } else {
+                        return;
+                    }
+                } else {
+                    // Create new folder flow
+                    const inputProjectName = await vscode.window.showInputBox({
+                        prompt: 'What would you like to name your project?',
+                        placeHolder: 'my-awesome-project',
+                        value: 'my-awesome-project',
+                        validateInput: (value) => {
+                            if (!value) {
+                                return 'Project name is required';
+                            }
+                            if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
+                                return 'Project name can only contain letters, numbers, hyphens, and underscores';
+                            }
+                            return null;
+                        }
+                    });
+
+                    if (!inputProjectName) {
                         return;
                     }
 
-                    if (folderChoice.value === 'select') {
-                        const selectedItems = await vscode.window.showOpenDialog({
-                            canSelectFiles: false,
-                            canSelectFolders: true,
-                            canSelectMany: false,
-                            openLabel: 'Select Project Folder',
-                            title: 'Choose the folder where you want to create your project'
-                        });
-
-                        if (selectedItems && selectedItems.length > 0) {
-                            selectedFolderPath = selectedItems[0].fsPath;
-                            projectName = path.basename(selectedFolderPath);
-                            isFolderSelected = true;
-                        } else {
-                            return;
-                        }
-                    } else {
-                        // Create new folder flow
-                        const inputProjectName = await vscode.window.showInputBox({
-                            prompt: 'What would you like to name your project?',
-                            placeHolder: 'my-awesome-project',
-                            value: 'my-awesome-project',
-                            validateInput: (value) => {
-                                if (!value) {
-                                    return 'Project name is required';
-                                }
-                                if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
-                                    return 'Project name can only contain letters, numbers, hyphens, and underscores';
-                                }
-                                return null;
-                            }
-                        });
-
-                        if (!inputProjectName) {
-                            return;
-                        }
-
-                        projectName = inputProjectName;
-                        selectedFolderPath = path.join(workspaceFolder.uri.fsPath, projectName);
-                    }
+                    projectName = inputProjectName;
+                    selectedFolderPath = path.join(workspaceFolder.uri.fsPath, projectName);
                 }
             }
             
