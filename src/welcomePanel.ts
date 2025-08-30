@@ -117,48 +117,145 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                 <div class="welcome-container">
                     <div class="header">
                         <h1>🚀 Edino Project Generator</h1>
-                        <p>Quickly create new projects with pre-configured structures</p>
+                        <p>Create professional projects with 20+ programming languages and frameworks</p>
                     </div>
                     
-                    <div class="project-types">
-                        <div class="project-card" onclick="createProject('fullstack')">
-                            <div class="card-icon">🚀</div>
-                            <h3>Full Stack</h3>
-                            <p>Complete React frontend + Node.js backend with MongoDB</p>
-                            <button class="create-btn">Create Project</button>
+                    <div class="quick-start">
+                        <h2>⚡ Quick Start</h2>
+                        <div class="project-types">
+                            <div class="project-card" onclick="createProject('fullstack')">
+                                <div class="card-icon">🚀</div>
+                                <h3>Full Stack</h3>
+                                <p>React + Node.js + MongoDB</p>
+                                <div class="tech-stack">
+                                    <span class="tech">React</span>
+                                    <span class="tech">Node.js</span>
+                                    <span class="tech">MongoDB</span>
+                                </div>
+                                <button class="create-btn">Create Project</button>
+                            </div>
+                            
+                            <div class="project-card" onclick="createProject('frontend')">
+                                <div class="card-icon">🎨</div>
+                                <h3>Frontend</h3>
+                                <p>React with TypeScript & Vite</p>
+                                <div class="tech-stack">
+                                    <span class="tech">React</span>
+                                    <span class="tech">TypeScript</span>
+                                    <span class="tech">Vite</span>
+                                </div>
+                                <button class="create-btn">Create Project</button>
+                            </div>
+                            
+                            <div class="project-card" onclick="createProject('backend')">
+                                <div class="card-icon">⚙️</div>
+                                <h3>Backend</h3>
+                                <p>Express.js API with JWT</p>
+                                <div class="tech-stack">
+                                    <span class="tech">Express</span>
+                                    <span class="tech">JWT</span>
+                                    <span class="tech">MongoDB</span>
+                                </div>
+                                <button class="create-btn">Create Project</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="advanced-section">
+                        <h2>🌟 Advanced Templates</h2>
+                        <p>Choose from 20+ languages and frameworks</p>
+                        
+                        <div class="language-grid">
+                            <div class="language-card" onclick="createAdvancedProject()">
+                                <div class="lang-icon">🐍</div>
+                                <h4>Python</h4>
+                                <p>FastAPI, Django, Flask</p>
+                            </div>
+                            
+                            <div class="language-card" onclick="createAdvancedProject()">
+                                <div class="lang-icon">☕</div>
+                                <h4>Java</h4>
+                                <p>Spring Boot, JPA, MySQL</p>
+                            </div>
+                            
+                            <div class="language-card" onclick="createAdvancedProject()">
+                                <div class="lang-icon">🦀</div>
+                                <h4>Rust</h4>
+                                <p>Actix, Rocket, Cargo</p>
+                            </div>
+                            
+                            <div class="language-card" onclick="createAdvancedProject()">
+                                <div class="lang-icon">🐹</div>
+                                <h4>Go</h4>
+                                <p>Gin, Echo, GORM</p>
+                            </div>
+                            
+                            <div class="language-card" onclick="createAdvancedProject()">
+                                <div class="lang-icon">📱</div>
+                                <h4>Mobile</h4>
+                                <p>React Native, Flutter</p>
+                            </div>
+                            
+                            <div class="language-card" onclick="createAdvancedProject()">
+                                <div class="lang-icon">🖥️</div>
+                                <h4>Desktop</h4>
+                                <p>Electron, Tauri</p>
+                            </div>
+                            
+                            <div class="language-card" onclick="createAdvancedProject()">
+                                <div class="lang-icon">🤖</div>
+                                <h4>AI/ML</h4>
+                                <p>NumPy, Pandas, Scikit-learn</p>
+                            </div>
+                            
+                            <div class="language-card" onclick="createAdvancedProject()">
+                                <div class="lang-icon">🔧</div>
+                                <h4>CLI</h4>
+                                <p>Node.js CLI tools</p>
+                            </div>
                         </div>
                         
-                        <div class="project-card" onclick="createProject('frontend')">
-                            <div class="card-icon">🎨</div>
-                            <h3>Frontend</h3>
-                            <p>React application with routing and components</p>
-                            <button class="create-btn">Create Project</button>
-                        </div>
-                        
-                        <div class="project-card" onclick="createProject('backend')">
-                            <div class="card-icon">⚙️</div>
-                            <h3>Backend</h3>
-                            <p>Node.js/Express API with authentication</p>
-                            <button class="create-btn">Create Project</button>
-                        </div>
-                        
-                        <div class="project-card advanced" onclick="createAdvancedProject()">
-                            <div class="card-icon">🌟</div>
-                            <h3>Advanced Templates</h3>
-                            <p>Multiple languages: Python, Java, Go, Rust, and more</p>
-                            <button class="create-btn">Choose Template</button>
+                        <div class="advanced-cta">
+                            <button class="action-btn primary large" onclick="createAdvancedProject()">
+                                🎯 Browse All Templates
+                            </button>
                         </div>
                     </div>
                     
                     <div class="features">
                         <h2>✨ Features</h2>
-                        <ul>
-                            <li>✅ Industry-standard folder structures</li>
-                            <li>✅ Pre-configured dependencies</li>
-                            <li>✅ Comprehensive documentation</li>
-                            <li>✅ Testing setup included</li>
-                            <li>✅ Production-ready configuration</li>
-                        </ul>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">📁</span>
+                                <h4>Industry Standards</h4>
+                                <p>Professional folder structures</p>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⚡</span>
+                                <h4>Pre-configured</h4>
+                                <p>Dependencies & build tools</p>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🧪</span>
+                                <h4>Testing Ready</h4>
+                                <p>Testing frameworks included</p>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📚</span>
+                                <h4>Documentation</h4>
+                                <p>Comprehensive README files</p>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🐳</span>
+                                <h4>Docker Support</h4>
+                                <p>Containerization ready</p>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔧</span>
+                                <h4>Modern Tooling</h4>
+                                <p>Latest frameworks & tools</p>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="actions">
