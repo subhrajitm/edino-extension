@@ -54,7 +54,7 @@ function activate(context) {
                 vscode.window.showErrorMessage('❌ Please open a workspace folder first to create your project.');
                 return;
             }
-            // Smart folder detection
+            // Smart folder detection and workspace handling
             const activeTextEditor = vscode.window.activeTextEditor;
             let selectedFolderPath;
             let projectName;
@@ -79,39 +79,30 @@ function activate(context) {
                     isFolderSelected = true;
                 }
             }
-            // If no folder is selected, provide better guidance
+            // If no folder is selected, use workspace root or ask for project name
             if (!selectedFolderPath) {
-                const folderChoice = await vscode.window.showQuickPick([
-                    { label: '📁 Select a folder', description: 'Choose an existing folder for your project', value: 'select' },
-                    { label: '🆕 Create new folder', description: 'Create a new folder with custom name', value: 'create' }
-                ], {
-                    placeHolder: 'How would you like to set up your project location?',
-                    ignoreFocusOut: true
-                });
-                if (!folderChoice) {
-                    return;
-                }
-                if (folderChoice.value === 'select') {
-                    const selectedItems = await vscode.window.showOpenDialog({
-                        canSelectFiles: false,
-                        canSelectFolders: true,
-                        canSelectMany: false,
-                        openLabel: 'Select Project Folder',
-                        title: 'Choose the folder where you want to create your project'
-                    });
-                    if (selectedItems && selectedItems.length > 0) {
-                        selectedFolderPath = selectedItems[0].fsPath;
-                        projectName = path.basename(selectedFolderPath);
-                        isFolderSelected = true;
-                    }
-                    else {
-                        return;
-                    }
+                // Check if workspace root has content (indicating it's a project folder)
+                const workspaceContents = await fs.readdir(workspaceFolder.uri.fsPath);
+                const hasProjectFiles = workspaceContents.some(file => file === 'package.json' ||
+                    file === 'requirements.txt' ||
+                    file === 'pom.xml' ||
+                    file === 'Cargo.toml' ||
+                    file === 'go.mod' ||
+                    file === 'composer.json' ||
+                    file === 'Gemfile' ||
+                    file === 'pubspec.yaml' ||
+                    file === 'README.md' ||
+                    file === '.gitignore');
+                if (hasProjectFiles) {
+                    // Workspace root appears to be a project folder, use it
+                    selectedFolderPath = workspaceFolder.uri.fsPath;
+                    projectName = workspaceFolder.name;
+                    isFolderSelected = true;
                 }
                 else {
-                    // Create new folder flow
+                    // Ask user for project name to create in workspace root
                     const inputProjectName = await vscode.window.showInputBox({
-                        prompt: 'What would you like to name your project?',
+                        prompt: 'What would you like to name your project? (will be created in workspace root)',
                         placeHolder: 'my-awesome-project',
                         value: 'my-awesome-project',
                         validateInput: (value) => {
@@ -127,16 +118,8 @@ function activate(context) {
                     if (!inputProjectName) {
                         return;
                     }
-                    const targetDir = await vscode.window.showInputBox({
-                        prompt: 'Where should we create your project? (relative to workspace)',
-                        placeHolder: 'projects',
-                        value: 'projects'
-                    });
-                    if (!targetDir) {
-                        return;
-                    }
                     projectName = inputProjectName;
-                    selectedFolderPath = path.join(workspaceFolder.uri.fsPath, targetDir, projectName);
+                    selectedFolderPath = path.join(workspaceFolder.uri.fsPath, projectName);
                 }
             }
             // Show project type selection with better descriptions
@@ -282,40 +265,30 @@ function activate(context) {
                     isFolderSelected = true;
                 }
             }
-            // If no folder is selected, provide better guidance
+            // If no folder is selected, use workspace root or ask for project name
             if (!selectedFolderPath) {
-                // Only ask for folder selection if we're in the root workspace
-                const folderChoice = await vscode.window.showQuickPick([
-                    { label: '📁 Select a folder', description: 'Choose an existing folder for your project', value: 'select' },
-                    { label: '🆕 Create new folder', description: 'Create a new folder with custom name', value: 'create' }
-                ], {
-                    placeHolder: 'How would you like to set up your project location?',
-                    ignoreFocusOut: true
-                });
-                if (!folderChoice) {
-                    return;
-                }
-                if (folderChoice.value === 'select') {
-                    const selectedItems = await vscode.window.showOpenDialog({
-                        canSelectFiles: false,
-                        canSelectFolders: true,
-                        canSelectMany: false,
-                        openLabel: 'Select Project Folder',
-                        title: 'Choose the folder where you want to create your project'
-                    });
-                    if (selectedItems && selectedItems.length > 0) {
-                        selectedFolderPath = selectedItems[0].fsPath;
-                        projectName = path.basename(selectedFolderPath);
-                        isFolderSelected = true;
-                    }
-                    else {
-                        return;
-                    }
+                // Check if workspace root has content (indicating it's a project folder)
+                const workspaceContents = await fs.readdir(workspaceFolder.uri.fsPath);
+                const hasProjectFiles = workspaceContents.some(file => file === 'package.json' ||
+                    file === 'requirements.txt' ||
+                    file === 'pom.xml' ||
+                    file === 'Cargo.toml' ||
+                    file === 'go.mod' ||
+                    file === 'composer.json' ||
+                    file === 'Gemfile' ||
+                    file === 'pubspec.yaml' ||
+                    file === 'README.md' ||
+                    file === '.gitignore');
+                if (hasProjectFiles) {
+                    // Workspace root appears to be a project folder, use it
+                    selectedFolderPath = workspaceFolder.uri.fsPath;
+                    projectName = workspaceFolder.name;
+                    isFolderSelected = true;
                 }
                 else {
-                    // Create new folder flow
+                    // Ask user for project name to create in workspace root
                     const inputProjectName = await vscode.window.showInputBox({
-                        prompt: 'What would you like to name your project?',
+                        prompt: 'What would you like to name your project? (will be created in workspace root)',
                         placeHolder: 'my-awesome-project',
                         value: 'my-awesome-project',
                         validateInput: (value) => {
