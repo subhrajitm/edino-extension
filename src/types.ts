@@ -195,6 +195,7 @@ export interface TemplateConfig {
     features: string[];
     complexity: 'simple' | 'medium' | 'complex';
     tags: string[];
+    popularity?: number;
 }
 
 export interface LanguageConfig {

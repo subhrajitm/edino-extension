@@ -1,16 +1,37 @@
 {
   "name": "edino-extension",
   "displayName": "Edino - Project Generator",
-  "description": "Quickly start new coding projects with pre-configured folder structures for Full Stack, Frontend, or Backend development",
+  "description": "Quickly start new coding projects with pre-configured folder structures for Full Stack, Frontend, or Backend development. Supports 20+ languages and 50+ templates with smart workspace detection.",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.74.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Programming Languages",
+    "Snippets",
+    "Extension Packs"
+  ],
+  "keywords": [
+    "project",
+    "generator",
+    "fullstack",
+    "frontend",
+    "backend",
+    "react",
+    "node",
+    "express",
+    "python",
+    "java",
+    "rust",
+    "go",
+    "templates",
+    "boilerplate",
+    "scaffolding"
   ],
   "activationEvents": [
-    "onCommand:edino.createProject"
+    "onCommand:edino.createProject",
+    "onView:edino-welcome"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -29,6 +50,26 @@
         "command": "edino.showWelcome",
         "title": "Show Welcome Screen",
         "category": "Edino"
+      },
+      {
+        "command": "edino.showAITemplates",
+        "title": "Show AI Templates",
+        "category": "Edino"
+      },
+      {
+        "command": "edino.showProjectPreview",
+        "title": "Show Project Preview",
+        "category": "Edino"
+      },
+      {
+        "command": "edino.showTeamTemplates",
+        "title": "Show Team Templates",
+        "category": "Edino"
+      },
+      {
+        "command": "edino.showMarketplace",
+        "title": "Show Template Marketplace",
+        "category": "Edino"
       }
     ],
     "menus": {
@@ -42,6 +83,26 @@
       "commandPalette": [
         {
           "command": "edino.createProject",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "edino.createAdvancedProject",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "edino.showAITemplates",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "edino.showProjectPreview",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "edino.showTeamTemplates",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "edino.showMarketplace",
           "when": "workspaceFolderCount > 0"
         }
       ],
@@ -74,7 +135,7 @@
     "viewsWelcome": [
       {
         "view": "edino-welcome",
-        "contents": "Welcome to Edino Project Generator!\n\n[Create New Project](command:edino.createProject)\n\nQuick Start:\n• Frontend: React applications\n• Backend: Node.js APIs\n• Full Stack: Complete applications\n\n[View Documentation](command:edino.showWelcome)"
+        "contents": "Welcome to Edino Project Generator!\n\n[Create New Project](command:edino.createProject)\n[Create Advanced Project](command:edino.createAdvancedProject)\n[AI Templates](command:edino.showAITemplates)\n[Project Preview](command:edino.showProjectPreview)\n[Team Templates](command:edino.showTeamTemplates)\n[Marketplace](command:edino.showMarketplace)\n\nQuick Start:\n• Frontend: React applications\n• Backend: Node.js APIs\n• Full Stack: Complete applications\n• 20+ Languages supported\n\n[View Documentation](command:edino.showWelcome)"
       }
     ],
     "welcomePage": {
@@ -88,6 +149,41 @@
         }
       ],
       "secondary": [
+        {
+          "id": "edino.advanced",
+          "title": "🎯 Advanced Templates",
+          "description": "Browse 50+ specialized templates",
+          "command": "edino.createAdvancedProject",
+          "icon": "resources/icon.svg"
+        },
+        {
+          "id": "edino.ai",
+          "title": "🤖 AI Templates",
+          "description": "AI-powered template recommendations",
+          "command": "edino.showAITemplates",
+          "icon": "resources/icon.svg"
+        },
+        {
+          "id": "edino.preview",
+          "title": "👀 Project Preview",
+          "description": "Preview project structure before creation",
+          "command": "edino.showProjectPreview",
+          "icon": "resources/icon.svg"
+        },
+        {
+          "id": "edino.team",
+          "title": "👥 Team Templates",
+          "description": "Collaborate with team templates",
+          "command": "edino.showTeamTemplates",
+          "icon": "resources/icon.svg"
+        },
+        {
+          "id": "edino.marketplace",
+          "title": "🛒 Template Marketplace",
+          "description": "Browse community templates",
+          "command": "edino.showMarketplace",
+          "icon": "resources/icon.svg"
+        },
         {
           "id": "edino.documentation",
           "title": "📚 Documentation",
@@ -104,7 +200,12 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "lint:fix": "eslint src --ext ts --fix",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "demo": "node demo.js",
+    "clean": "rm -rf out demo-output",
+    "build": "npm run clean && npm run compile && npm run package"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
@@ -126,16 +227,11 @@
   "publisher": "edino",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/edino-extension.git"
+    "url": "https://github.com/subhrajitm/edino-extension.git"
   },
-  "keywords": [
-    "project",
-    "generator",
-    "fullstack",
-    "frontend",
-    "backend",
-    "react",
-    "node",
-    "express"
-  ]
+  "bugs": {
+    "url": "https://github.com/subhrajitm/edino-extension/issues"
+  },
+  "homepage": "https://github.com/subhrajitm/edino-extension#readme",
+  "license": "MIT"
 }
