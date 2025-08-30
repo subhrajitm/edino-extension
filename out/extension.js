@@ -52,6 +52,34 @@ function activate(context) {
                 vscode.window.showErrorMessage('Please open a workspace folder first.');
                 return;
             }
+            // Check if a folder is selected in the explorer
+            const activeTextEditor = vscode.window.activeTextEditor;
+            let selectedFolderPath;
+            let projectName;
+            if (activeTextEditor) {
+                // Get the folder containing the active file
+                const activeFilePath = activeTextEditor.document.uri.fsPath;
+                const activeFolderPath = path.dirname(activeFilePath);
+                // Check if the active folder is within the workspace
+                if (activeFolderPath.startsWith(workspaceFolder.uri.fsPath)) {
+                    selectedFolderPath = activeFolderPath;
+                    projectName = path.basename(activeFolderPath);
+                }
+            }
+            // If no folder is selected, check for selected items in explorer
+            if (!selectedFolderPath) {
+                const selectedItems = await vscode.window.showOpenDialog({
+                    canSelectFiles: false,
+                    canSelectFolders: true,
+                    canSelectMany: false,
+                    openLabel: 'Select Project Folder',
+                    title: 'Select folder for project creation'
+                });
+                if (selectedItems && selectedItems.length > 0) {
+                    selectedFolderPath = selectedItems[0].fsPath;
+                    projectName = path.basename(selectedFolderPath);
+                }
+            }
             // Show project type selection
             const projectType = await vscode.window.showQuickPick([
                 { label: '🚀 Full Stack', value: types_1.ProjectType.FULL_STACK },
@@ -64,48 +92,56 @@ function activate(context) {
             if (!projectType) {
                 return;
             }
-            // Get project name
-            const projectName = await vscode.window.showInputBox({
-                prompt: 'Enter project name',
-                placeHolder: 'my-awesome-project',
-                validateInput: (value) => {
-                    if (!value) {
-                        return 'Project name is required';
+            // If no folder was selected, ask for project name and target directory
+            if (!selectedFolderPath) {
+                // Get project name
+                const inputProjectName = await vscode.window.showInputBox({
+                    prompt: 'Enter project name',
+                    placeHolder: 'my-awesome-project',
+                    validateInput: (value) => {
+                        if (!value) {
+                            return 'Project name is required';
+                        }
+                        if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
+                            return 'Project name can only contain letters, numbers, hyphens, and underscores';
+                        }
+                        return null;
                     }
-                    if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
-                        return 'Project name can only contain letters, numbers, hyphens, and underscores';
-                    }
-                    return null;
+                });
+                if (!inputProjectName) {
+                    return;
                 }
-            });
-            if (!projectName) {
-                return;
+                // Get target directory
+                const targetDir = await vscode.window.showInputBox({
+                    prompt: 'Enter target directory (relative to workspace)',
+                    placeHolder: 'projects',
+                    value: 'projects'
+                });
+                if (!targetDir) {
+                    return;
+                }
+                projectName = inputProjectName;
+                selectedFolderPath = path.join(workspaceFolder.uri.fsPath, targetDir, projectName);
             }
-            // Get target directory
-            const targetDir = await vscode.window.showInputBox({
-                prompt: 'Enter target directory (relative to workspace)',
-                placeHolder: 'projects',
-                value: 'projects'
-            });
-            if (!targetDir) {
-                return;
+            else {
+                // Use the selected folder path directly
+                selectedFolderPath = path.join(selectedFolderPath, projectName || 'project');
             }
-            const fullTargetPath = path.join(workspaceFolder.uri.fsPath, targetDir, projectName);
             // Check if directory already exists
-            if (await fs.pathExists(fullTargetPath)) {
+            if (await fs.pathExists(selectedFolderPath)) {
                 const overwrite = await vscode.window.showWarningMessage(`Directory "${projectName}" already exists. Do you want to overwrite it?`, { modal: true }, 'Yes');
                 if (!overwrite) {
                     return;
                 }
-                await fs.remove(fullTargetPath);
+                await fs.remove(selectedFolderPath);
             }
             // Create project structure
             const generator = new projectGenerator_1.ProjectGenerator();
-            await generator.generateProject(projectType.value, fullTargetPath, projectName);
+            await generator.generateProject(projectType.value, selectedFolderPath, projectName || 'project');
             // Show success message
             vscode.window.showInformationMessage(`Project "${projectName}" created successfully!`, 'Open Folder').then(selection => {
                 if (selection === 'Open Folder') {
-                    vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(fullTargetPath));
+                    vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(selectedFolderPath));
                 }
             });
         }
@@ -113,6 +149,121 @@ function activate(context) {
             vscode.window.showErrorMessage(`Failed to create project: ${error}`);
         }
     });
+    context.subscriptions.push(createProjectDisposable);
+    // Register advanced project creation command
+    let createAdvancedProjectDisposable = vscode.commands.registerCommand('edino.createAdvancedProject', async () => {
+        try {
+            const generator = new projectGenerator_1.ProjectGenerator();
+            const templates = generator.getAvailableTemplates();
+            // Get the current workspace folder
+            const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+            if (!workspaceFolder) {
+                vscode.window.showErrorMessage('Please open a workspace folder first.');
+                return;
+            }
+            // Check if a folder is selected in the explorer
+            const activeTextEditor = vscode.window.activeTextEditor;
+            let selectedFolderPath;
+            let projectName;
+            if (activeTextEditor) {
+                // Get the folder containing the active file
+                const activeFilePath = activeTextEditor.document.uri.fsPath;
+                const activeFolderPath = path.dirname(activeFilePath);
+                // Check if the active folder is within the workspace
+                if (activeFolderPath.startsWith(workspaceFolder.uri.fsPath)) {
+                    selectedFolderPath = activeFolderPath;
+                    projectName = path.basename(activeFolderPath);
+                }
+            }
+            // If no folder is selected, check for selected items in explorer
+            if (!selectedFolderPath) {
+                const selectedItems = await vscode.window.showOpenDialog({
+                    canSelectFiles: false,
+                    canSelectFolders: true,
+                    canSelectMany: false,
+                    openLabel: 'Select Project Folder',
+                    title: 'Select folder for project creation'
+                });
+                if (selectedItems && selectedItems.length > 0) {
+                    selectedFolderPath = selectedItems[0].fsPath;
+                    projectName = path.basename(selectedFolderPath);
+                }
+            }
+            // Show template selection
+            const template = await vscode.window.showQuickPick(templates.map((t) => ({
+                label: `${t.name}`,
+                description: t.description,
+                detail: `${t.language} • ${t.complexity} • ${t.features.join(', ')}`,
+                value: t
+            })), {
+                placeHolder: 'Select a template',
+                ignoreFocusOut: true
+            });
+            if (!template) {
+                return;
+            }
+            // If no folder was selected, ask for project name
+            if (!selectedFolderPath) {
+                // Get project name
+                const inputProjectName = await vscode.window.showInputBox({
+                    prompt: 'Enter project name',
+                    placeHolder: 'my-awesome-project',
+                    validateInput: (value) => {
+                        if (!value) {
+                            return 'Project name is required';
+                        }
+                        if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
+                            return 'Project name can only contain letters, numbers, hyphens, and underscores';
+                        }
+                        return null;
+                    }
+                });
+                if (!inputProjectName) {
+                    return;
+                }
+                projectName = inputProjectName;
+                selectedFolderPath = path.join(workspaceFolder.uri.fsPath, projectName);
+            }
+            else {
+                // Use the selected folder path directly
+                selectedFolderPath = path.join(selectedFolderPath, projectName || 'project');
+            }
+            // Check if directory already exists
+            if (await fs.pathExists(selectedFolderPath)) {
+                const overwrite = await vscode.window.showWarningMessage(`Directory "${projectName}" already exists. Do you want to overwrite it?`, { modal: true }, 'Yes');
+                if (!overwrite) {
+                    return;
+                }
+                await fs.remove(selectedFolderPath);
+            }
+            // Create project configuration
+            const config = {
+                name: projectName || 'project',
+                type: template.value.type,
+                language: template.value.language,
+                framework: template.value.framework,
+                database: template.value.database,
+                testing: template.value.testing,
+                buildTool: template.value.buildTool,
+                features: template.value.features,
+                description: template.value.description,
+                version: '1.0.0',
+                author: 'Developer'
+            };
+            // Generate project
+            await generator.generateAdvancedProject(config, selectedFolderPath);
+            // Show success message
+            vscode.window.showInformationMessage(`Advanced project "${projectName}" created successfully!`, 'Open Folder').then(selection => {
+                if (selection === 'Open Folder') {
+                    vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(selectedFolderPath));
+                }
+            });
+        }
+        catch (error) {
+            vscode.window.showErrorMessage(`Failed to create advanced project: ${error}`);
+        }
+    });
+    context.subscriptions.push(createAdvancedProjectDisposable);
     // Register the welcome screen command
     let showWelcomeDisposable = vscode.commands.registerCommand('edino.showWelcome', () => {
         welcomePanel_1.WelcomePanel.createOrShow(context.extensionUri);
@@ -126,85 +277,7 @@ function activate(context) {
     // Register webview provider for the sidebar
     const welcomeProvider = new welcomePanel_1.WelcomePanel(context.extensionUri);
     context.subscriptions.push(vscode.window.registerWebviewViewProvider('edino-welcome', welcomeProvider));
-    context.subscriptions.push(createProjectDisposable, showWelcomeDisposable, statusBarItem);
-    // Register advanced project creation command
-    let createAdvancedProjectDisposable = vscode.commands.registerCommand('edino.createAdvancedProject', async () => {
-        try {
-            const generator = new projectGenerator_1.ProjectGenerator();
-            const templates = generator.getAvailableTemplates();
-            // Show template selection
-            const template = await vscode.window.showQuickPick(templates.map(t => ({
-                label: `${t.name}`,
-                description: t.description,
-                detail: `${t.language} • ${t.complexity} • ${t.features.join(', ')}`,
-                value: t
-            })), {
-                placeHolder: 'Select a template',
-                ignoreFocusOut: true
-            });
-            if (!template) {
-                return;
-            }
-            // Get project name
-            const projectName = await vscode.window.showInputBox({
-                prompt: 'Enter project name',
-                placeHolder: 'my-awesome-project',
-                validateInput: (value) => {
-                    if (!value) {
-                        return 'Project name is required';
-                    }
-                    if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
-                        return 'Project name can only contain letters, numbers, hyphens, and underscores';
-                    }
-                    return null;
-                }
-            });
-            if (!projectName) {
-                return;
-            }
-            // Get workspace folder
-            const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-            if (!workspaceFolder) {
-                vscode.window.showErrorMessage('Please open a workspace folder first.');
-                return;
-            }
-            const fullTargetPath = path.join(workspaceFolder.uri.fsPath, projectName);
-            // Check if directory already exists
-            if (await fs.pathExists(fullTargetPath)) {
-                const overwrite = await vscode.window.showWarningMessage(`Directory "${projectName}" already exists. Do you want to overwrite it?`, { modal: true }, 'Yes');
-                if (!overwrite) {
-                    return;
-                }
-                await fs.remove(fullTargetPath);
-            }
-            // Create project configuration
-            const config = {
-                name: projectName,
-                type: template.value.type,
-                language: template.value.language,
-                framework: template.value.framework,
-                database: template.value.database,
-                testing: template.value.testing,
-                buildTool: template.value.buildTool,
-                features: template.value.features,
-                description: template.value.description,
-                version: '1.0.0',
-                author: 'Developer'
-            };
-            // Generate project
-            await generator.generateAdvancedProject(config, fullTargetPath);
-            // Show success message
-            vscode.window.showInformationMessage(`Advanced project "${projectName}" created successfully!`, 'Open Folder').then(selection => {
-                if (selection === 'Open Folder') {
-                    vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(fullTargetPath));
-                }
-            });
-        }
-        catch (error) {
-            vscode.window.showErrorMessage(`Failed to create advanced project: ${error}`);
-        }
-    });
-    context.subscriptions.push(createAdvancedProjectDisposable);
+    context.subscriptions.push(showWelcomeDisposable, statusBarItem);
 }
 function deactivate() { }
 //# sourceMappingURL=extension.js.map
