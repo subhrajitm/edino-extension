@@ -21,6 +21,11 @@
         "category": "Edino"
       },
       {
+        "command": "edino.createAdvancedProject",
+        "title": "Create Advanced Project",
+        "category": "Edino"
+      },
+      {
         "command": "edino.showWelcome",
         "title": "Show Welcome Screen",
         "category": "Edino"

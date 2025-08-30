@@ -76,6 +76,9 @@ class WelcomePanel {
                 case 'createProject':
                     vscode.commands.executeCommand('edino.createProject');
                     return;
+                case 'createAdvancedProject':
+                    vscode.commands.executeCommand('edino.createAdvancedProject');
+                    return;
                 case 'showDocumentation':
                     this._showDocumentation();
                     return;
@@ -138,6 +141,13 @@ class WelcomePanel {
                             <h3>Backend</h3>
                             <p>Node.js/Express API with authentication</p>
                             <button class="create-btn">Create Project</button>
+                        </div>
+                        
+                        <div class="project-card advanced" onclick="createAdvancedProject()">
+                            <div class="card-icon">🌟</div>
+                            <h3>Advanced Templates</h3>
+                            <p>Multiple languages: Python, Java, Go, Rust, and more</p>
+                            <button class="create-btn">Choose Template</button>
                         </div>
                     </div>
                     

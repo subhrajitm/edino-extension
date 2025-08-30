@@ -40,11 +40,13 @@ const types_1 = require("./types");
 const frontendTemplates_1 = require("./templates/frontendTemplates");
 const backendTemplates_1 = require("./templates/backendTemplates");
 const fullStackTemplates_1 = require("./templates/fullStackTemplates");
+const templateManager_1 = require("./templateManager");
 class ProjectGenerator {
     constructor() {
         this.frontendTemplates = new frontendTemplates_1.FrontendTemplates();
         this.backendTemplates = new backendTemplates_1.BackendTemplates();
         this.fullStackTemplates = new fullStackTemplates_1.FullStackTemplates();
+        this.templateManager = templateManager_1.TemplateManager.getInstance();
     }
     async generateProject(projectType, targetPath, projectName) {
         // Create the base directory
@@ -74,6 +76,21 @@ class ProjectGenerator {
             await fs.ensureDir(path.dirname(filePath));
             await fs.writeFile(filePath, file.content, 'utf8');
         }
+    }
+    async generateAdvancedProject(config, targetPath) {
+        await this.templateManager.generateProject(config, targetPath);
+    }
+    getAvailableTemplates() {
+        return this.templateManager.getTemplates();
+    }
+    getTemplatesByType(type) {
+        return this.templateManager.getTemplatesByType(type);
+    }
+    getTemplatesByLanguage(language) {
+        return this.templateManager.getTemplatesByLanguage(language);
+    }
+    getAllLanguages() {
+        return this.templateManager.getAllLanguages();
     }
 }
 exports.ProjectGenerator = ProjectGenerator;

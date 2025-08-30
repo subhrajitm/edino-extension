@@ -9,6 +9,13 @@ function createProject(type = null) {
     });
 }
 
+function createAdvancedProject() {
+    // Send message to extension to create advanced project
+    vscode.postMessage({
+        command: 'createAdvancedProject'
+    });
+}
+
 function showDocumentation() {
     // Send message to extension
     vscode.postMessage({
