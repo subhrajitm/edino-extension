@@ -18,17 +18,17 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeEventHandlers() {
     console.log('🔧 Setting up event handlers');
     
-    // Action items
-    const actionItems = document.querySelectorAll('.action-item');
-    console.log('📋 Found', actionItems.length, 'action items');
+    // Action cards (professional design)
+    const actionCards = document.querySelectorAll('.action-card');
+    console.log('📋 Found', actionCards.length, 'action cards');
     
-    actionItems.forEach(item => {
-        item.addEventListener('click', function(e) {
+    actionCards.forEach(card => {
+        card.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
             const action = this.getAttribute('data-action');
-            console.log('🎯 Action item clicked:', action);
+            console.log('🎯 Action card clicked:', action);
             
             // Add visual feedback
             this.style.transform = 'scale(0.98)';
@@ -46,9 +46,67 @@ function initializeEventHandlers() {
         });
     });
     
-    // Template items
+    // Template cards (professional design)
+    const templateCards = document.querySelectorAll('.template-card');
+    console.log('📋 Found', templateCards.length, 'template cards');
+    
+    templateCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const templateType = card.getAttribute('data-template');
+            const language = card.getAttribute('data-language');
+            const framework = card.getAttribute('data-framework');
+            const title = card.querySelector('h4')?.textContent || '';
+            
+            console.log('🎯 Template card clicked:', { templateType, language, framework, title });
+            
+            // Add visual feedback
+            card.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                card.style.transform = '';
+            }, 150);
+            
+            if (templateType) {
+                createProject(templateType, { language, framework, title });
+            } else {
+                createProject();
+            }
+        });
+    });
+    
+    // Legacy support for old design elements
+    const actionItems = document.querySelectorAll('.action-item');
+    console.log('📋 Found', actionItems.length, 'legacy action items');
+    
+    actionItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const action = this.getAttribute('data-action');
+            console.log('🎯 Legacy action item clicked:', action);
+            
+            // Add visual feedback
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+            
+            if (action === 'quick') {
+                createProject();
+            } else if (action === 'advanced') {
+                createAdvancedProject();
+            } else if (action === 'clear-search') {
+                clearSearch();
+            }
+        });
+    });
+    
+    // Legacy template items
     const templateItems = document.querySelectorAll('.template-item');
-    console.log('📋 Found', templateItems.length, 'template items');
+    console.log('📋 Found', templateItems.length, 'legacy template items');
     
     templateItems.forEach(item => {
         item.addEventListener('click', function(e) {
@@ -60,7 +118,7 @@ function initializeEventHandlers() {
             const framework = this.getAttribute('data-framework');
             const title = this.querySelector('.template-title')?.textContent || '';
             
-            console.log('🎯 Template item clicked:', { templateType, language, framework, title });
+            console.log('🎯 Legacy template item clicked:', { templateType, language, framework, title });
             
             // Add visual feedback
             this.style.transform = 'scale(0.98)';
@@ -165,16 +223,36 @@ function initializeSearch() {
 function performSearch(query) {
     console.log('🔍 Performing search for:', query);
     
-    const searchClear = document.getElementById('searchClear');
+    const searchClear = document.getElementById('searchClear') || document.getElementById('searchClear-pro');
     const searchStats = document.getElementById('searchStats');
     const searchResults = document.getElementById('searchResults');
-    const noResults = document.getElementById('noResults');
+    const noResults = document.getElementById('noResults') || document.getElementById('noResults-pro');
     
     let totalResults = 0;
     
-    // Search in templates
-    const templateItems = document.querySelectorAll('.template-item');
+    // Search in template cards (professional design)
+    const templateCards = document.querySelectorAll('.template-card');
     let templateResults = 0;
+    
+    templateCards.forEach(card => {
+        const searchData = card.getAttribute('data-search') || '';
+        const title = card.querySelector('h4')?.textContent || '';
+        const stack = card.querySelector('.template-stack')?.textContent || '';
+        const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent).join(' ');
+        
+        const searchText = `${searchData} ${title} ${stack} ${tags}`.toLowerCase();
+        
+        if (searchText.includes(query)) {
+            card.classList.remove('hidden');
+            templateResults++;
+            totalResults++;
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+    
+    // Search in legacy template items
+    const templateItems = document.querySelectorAll('.template-item');
     
     templateItems.forEach(item => {
         const searchData = item.getAttribute('data-search') || '';
@@ -186,7 +264,6 @@ function performSearch(query) {
         
         if (searchText.includes(query)) {
             item.classList.remove('hidden');
-            templateResults++;
             totalResults++;
         } else {
             item.classList.add('hidden');
