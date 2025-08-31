@@ -18,6 +18,64 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeEventHandlers() {
     console.log('🔧 Setting up event handlers');
     
+    // Action buttons (ultra compact design)
+    const actionBtns = document.querySelectorAll('.action-btn');
+    console.log('📋 Found', actionBtns.length, 'action buttons');
+    
+    actionBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const action = this.getAttribute('data-action');
+            console.log('🎯 Action button clicked:', action);
+            
+            // Add visual feedback
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+            
+            if (action === 'quick') {
+                createProject();
+            } else if (action === 'advanced') {
+                createAdvancedProject();
+            } else if (action === 'clear-search') {
+                clearSearch();
+            }
+        });
+    });
+    
+    // Template items ultra (ultra compact design)
+    const templateItemsUltra = document.querySelectorAll('.template-item-ultra');
+    console.log('📋 Found', templateItemsUltra.length, 'ultra template items');
+    
+    templateItemsUltra.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const templateType = item.getAttribute('data-template');
+            const language = item.getAttribute('data-language');
+            const framework = item.getAttribute('data-framework');
+            const title = item.querySelector('.template-name-ultra')?.textContent || '';
+            
+            console.log('🎯 Ultra template item clicked:', { templateType, language, framework, title });
+            
+            // Add visual feedback
+            item.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                item.style.transform = '';
+            }, 150);
+            
+            if (templateType) {
+                createProject(templateType, { language, framework, title });
+            } else {
+                createProject();
+            }
+        });
+    });
+    
     // Action cards (professional design)
     const actionCards = document.querySelectorAll('.action-card');
     console.log('📋 Found', actionCards.length, 'action cards');
@@ -223,16 +281,35 @@ function initializeSearch() {
 function performSearch(query) {
     console.log('🔍 Performing search for:', query);
     
-    const searchClear = document.getElementById('searchClear') || document.getElementById('searchClear-pro');
+    const searchClear = document.getElementById('searchClear') || document.getElementById('searchClear-pro') || document.getElementById('searchClear-ultra');
     const searchStats = document.getElementById('searchStats');
     const searchResults = document.getElementById('searchResults');
-    const noResults = document.getElementById('noResults') || document.getElementById('noResults-pro');
+    const noResults = document.getElementById('noResults') || document.getElementById('noResults-pro') || document.getElementById('noResults-ultra');
     
     let totalResults = 0;
     
+    // Search in ultra compact template items
+    const templateItemsUltra = document.querySelectorAll('.template-item-ultra');
+    let templateResults = 0;
+    
+    templateItemsUltra.forEach(item => {
+        const searchData = item.getAttribute('data-search') || '';
+        const title = item.querySelector('.template-name-ultra')?.textContent || '';
+        const stack = item.querySelector('.template-stack-ultra')?.textContent || '';
+        
+        const searchText = `${searchData} ${title} ${stack}`.toLowerCase();
+        
+        if (searchText.includes(query)) {
+            item.classList.remove('hidden');
+            templateResults++;
+            totalResults++;
+        } else {
+            item.classList.add('hidden');
+        }
+    });
+    
     // Search in template cards (professional design)
     const templateCards = document.querySelectorAll('.template-card');
-    let templateResults = 0;
     
     templateCards.forEach(card => {
         const searchData = card.getAttribute('data-search') || '';
@@ -244,7 +321,6 @@ function performSearch(query) {
         
         if (searchText.includes(query)) {
             card.classList.remove('hidden');
-            templateResults++;
             totalResults++;
         } else {
             card.classList.add('hidden');

@@ -122,346 +122,125 @@ class WelcomePanel {
                 <link rel="stylesheet" href="${styleResetUri}">
             </head>
             <body>
-                <div class="welcome-container professional">
-                    <!-- Professional Header -->
-                    <div class="header-professional">
-                        <div class="header-brand">
-                            <div class="brand-logo">⚡</div>
-                            <div class="brand-text">
-                                <h1>Edino</h1>
-                                <span class="brand-subtitle">Project Generator</span>
-                            </div>
+                <div class="welcome-container ultra-compact">
+                    <!-- Ultra Compact Header -->
+                    <div class="header-ultra">
+                        <div class="header-brand-ultra">
+                            <span class="brand-icon">⚡</span>
+                            <span class="brand-name">Edino</span>
                         </div>
-                        <div class="header-stats">
-                            <div class="stat-item">
-                                <span class="stat-number">15</span>
-                                <span class="stat-label">Templates</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">8</span>
-                                <span class="stat-label">Categories</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">4</span>
-                                <span class="stat-label">Languages</span>
-                            </div>
+                        <div class="header-actions">
+                            <button class="action-btn primary" data-action="quick">Quick Start</button>
+                            <button class="action-btn secondary" data-action="advanced">Advanced</button>
                         </div>
                     </div>
                     
-                    <!-- Compact Search -->
-                    <div class="search-professional">
-                        <div class="search-wrapper">
-                            <div class="search-icon">🔍</div>
-                            <input type="text" id="searchInput" class="search-input-pro" placeholder="Search templates..." />
-                            <div class="search-clear-pro" id="searchClear" style="display: none;">×</div>
-                        </div>
-                        <div class="search-results" id="searchStats" style="display: none;">
-                            <span id="searchResults">0 results</span>
-                        </div>
+                    <!-- Ultra Compact Search -->
+                    <div class="search-ultra">
+                        <input type="text" id="searchInput" class="search-input-ultra" placeholder="Search templates..." />
+                        <div class="search-clear-ultra" id="searchClear" style="display: none;">×</div>
                     </div>
                     
-                    <!-- Quick Actions -->
-                    <div class="quick-actions">
-                        <div class="action-card primary" data-action="quick">
-                            <div class="action-icon">🚀</div>
-                            <div class="action-info">
-                                <h3>Quick Start</h3>
-                                <p>Basic templates for common projects</p>
+                    <!-- Ultra Compact Templates -->
+                    <div class="templates-ultra">
+                        <div class="template-row">
+                            <div class="template-item-ultra" data-search="frontend react typescript vite" data-template="frontend" data-language="typescript" data-framework="react">
+                                <span class="template-icon-ultra">⚛️</span>
+                                <span class="template-name-ultra">React</span>
+                                <span class="template-stack-ultra">TS + Vite</span>
                             </div>
-                            <div class="action-chevron">›</div>
-                        </div>
-                        <div class="action-card secondary" data-action="advanced">
-                            <div class="action-icon">⚙️</div>
-                            <div class="action-info">
-                                <h3>Advanced</h3>
-                                <p>Browse all specialized templates</p>
+                            <div class="template-item-ultra" data-search="frontend vue typescript vite" data-template="frontend" data-language="typescript" data-framework="vue">
+                                <span class="template-icon-ultra">💚</span>
+                                <span class="template-name-ultra">Vue</span>
+                                <span class="template-stack-ultra">TS + Vite</span>
                             </div>
-                            <div class="action-chevron">›</div>
-                        </div>
-                    </div>
-
-                    <!-- Template Categories -->
-                    <div class="template-categories">
-                        <div class="category-section">
-                            <h3 class="category-title">Frontend</h3>
-                            <div class="template-grid">
-                                <div class="template-card" data-search="frontend react typescript vite" data-template="frontend" data-language="typescript" data-framework="react">
-                                    <div class="template-header">
-                                        <div class="template-icon">⚛️</div>
-                                        <div class="template-meta">
-                                            <h4>React App</h4>
-                                            <span class="template-type">Frontend</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">React + TypeScript + Vite</div>
-                                    <div class="template-tags">
-                                        <span class="tag">React</span>
-                                        <span class="tag">TS</span>
-                                        <span class="tag">Vite</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="template-card" data-search="frontend vue typescript vite" data-template="frontend" data-language="typescript" data-framework="vue">
-                                    <div class="template-header">
-                                        <div class="template-icon">💚</div>
-                                        <div class="template-meta">
-                                            <h4>Vue.js App</h4>
-                                            <span class="template-type">Frontend</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">Vue 3 + TypeScript + Vite</div>
-                                    <div class="template-tags">
-                                        <span class="tag">Vue</span>
-                                        <span class="tag">TS</span>
-                                        <span class="tag">Vite</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="template-card" data-search="frontend angular typescript" data-template="frontend" data-language="typescript" data-framework="angular">
-                                    <div class="template-header">
-                                        <div class="template-icon">🅰️</div>
-                                        <div class="template-meta">
-                                            <h4>Angular App</h4>
-                                            <span class="template-type">Frontend</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">Angular 17+ + Standalone</div>
-                                    <div class="template-tags">
-                                        <span class="tag">Angular</span>
-                                        <span class="tag">TS</span>
-                                        <span class="tag">RxJS</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="template-card" data-search="frontend svelte sveltekit" data-template="frontend" data-language="typescript" data-framework="svelte">
-                                    <div class="template-header">
-                                        <div class="template-icon">⚡</div>
-                                        <div class="template-meta">
-                                            <h4>Svelte App</h4>
-                                            <span class="template-type">Frontend</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">Svelte + SvelteKit</div>
-                                    <div class="template-tags">
-                                        <span class="tag">Svelte</span>
-                                        <span class="tag">TS</span>
-                                        <span class="tag">Kit</span>
-                                    </div>
-                                </div>
+                            <div class="template-item-ultra" data-search="frontend angular typescript" data-template="frontend" data-language="typescript" data-framework="angular">
+                                <span class="template-icon-ultra">🅰️</span>
+                                <span class="template-name-ultra">Angular</span>
+                                <span class="template-stack-ultra">TS + RxJS</span>
+                            </div>
+                            <div class="template-item-ultra" data-search="frontend svelte sveltekit" data-template="frontend" data-language="typescript" data-framework="svelte">
+                                <span class="template-icon-ultra">⚡</span>
+                                <span class="template-name-ultra">Svelte</span>
+                                <span class="template-stack-ultra">TS + Kit</span>
                             </div>
                         </div>
-
-                        <div class="category-section">
-                            <h3 class="category-title">Backend</h3>
-                            <div class="template-grid">
-                                <div class="template-card" data-search="backend nodejs express typescript" data-template="backend" data-language="typescript" data-framework="express">
-                                    <div class="template-header">
-                                        <div class="template-icon">🟢</div>
-                                        <div class="template-meta">
-                                            <h4>Node.js API</h4>
-                                            <span class="template-type">Backend</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">Express + TypeScript + MongoDB</div>
-                                    <div class="template-tags">
-                                        <span class="tag">Express</span>
-                                        <span class="tag">TS</span>
-                                        <span class="tag">MongoDB</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="template-card" data-search="backend nestjs typescript" data-template="backend" data-language="typescript" data-framework="nestjs">
-                                    <div class="template-header">
-                                        <div class="template-icon">🪺</div>
-                                        <div class="template-meta">
-                                            <h4>NestJS API</h4>
-                                            <span class="template-type">Backend</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">NestJS + TypeScript + PostgreSQL</div>
-                                    <div class="template-tags">
-                                        <span class="tag">NestJS</span>
-                                        <span class="tag">TS</span>
-                                        <span class="tag">PostgreSQL</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="template-card" data-search="backend python fastapi" data-template="backend" data-language="python" data-framework="fastapi">
-                                    <div class="template-header">
-                                        <div class="template-icon">🐍</div>
-                                        <div class="template-meta">
-                                            <h4>Python FastAPI</h4>
-                                            <span class="template-type">Backend</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">FastAPI + SQLAlchemy + PostgreSQL</div>
-                                    <div class="template-tags">
-                                        <span class="tag">FastAPI</span>
-                                        <span class="tag">Python</span>
-                                        <span class="tag">SQLAlchemy</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="template-card" data-search="backend java spring boot" data-template="backend" data-language="java" data-framework="spring">
-                                    <div class="template-header">
-                                        <div class="template-icon">☕</div>
-                                        <div class="template-meta">
-                                            <h4>Spring Boot API</h4>
-                                            <span class="template-type">Backend</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">Spring Boot + Java + MySQL</div>
-                                    <div class="template-tags">
-                                        <span class="tag">Spring</span>
-                                        <span class="tag">Java</span>
-                                        <span class="tag">MySQL</span>
-                                    </div>
-                                </div>
+                        
+                        <div class="template-row">
+                            <div class="template-item-ultra" data-search="backend nodejs express typescript" data-template="backend" data-language="typescript" data-framework="express">
+                                <span class="template-icon-ultra">🟢</span>
+                                <span class="template-name-ultra">Express</span>
+                                <span class="template-stack-ultra">TS + MongoDB</span>
+                            </div>
+                            <div class="template-item-ultra" data-search="backend nestjs typescript" data-template="backend" data-language="typescript" data-framework="nestjs">
+                                <span class="template-icon-ultra">🪺</span>
+                                <span class="template-name-ultra">NestJS</span>
+                                <span class="template-stack-ultra">TS + PostgreSQL</span>
+                            </div>
+                            <div class="template-item-ultra" data-search="backend python fastapi" data-template="backend" data-language="python" data-framework="fastapi">
+                                <span class="template-icon-ultra">🐍</span>
+                                <span class="template-name-ultra">FastAPI</span>
+                                <span class="template-stack-ultra">Python + SQL</span>
+                            </div>
+                            <div class="template-item-ultra" data-search="backend java spring boot" data-template="backend" data-language="java" data-framework="spring">
+                                <span class="template-icon-ultra">☕</span>
+                                <span class="template-name-ultra">Spring</span>
+                                <span class="template-stack-ultra">Java + MySQL</span>
                             </div>
                         </div>
-
-                        <div class="category-section">
-                            <h3 class="category-title">Full Stack & Mobile</h3>
-                            <div class="template-grid">
-                                <div class="template-card" data-search="fullstack react nodejs typescript" data-template="fullstack" data-language="typescript" data-framework="react">
-                                    <div class="template-header">
-                                        <div class="template-icon">🔄</div>
-                                        <div class="template-meta">
-                                            <h4>React + Node.js</h4>
-                                            <span class="template-type">Full Stack</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">React + Node.js + TypeScript + MongoDB</div>
-                                    <div class="template-tags">
-                                        <span class="tag">React</span>
-                                        <span class="tag">Node.js</span>
-                                        <span class="tag">MongoDB</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="template-card" data-search="mobile react native typescript" data-template="mobile" data-language="typescript" data-framework="react-native">
-                                    <div class="template-header">
-                                        <div class="template-icon">📱</div>
-                                        <div class="template-meta">
-                                            <h4>React Native</h4>
-                                            <span class="template-type">Mobile</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">React Native + TypeScript + Navigation</div>
-                                    <div class="template-tags">
-                                        <span class="tag">React Native</span>
-                                        <span class="tag">TS</span>
-                                        <span class="tag">Mobile</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="template-card" data-search="mobile flutter dart" data-template="mobile" data-language="dart" data-framework="flutter">
-                                    <div class="template-header">
-                                        <div class="template-icon">🦋</div>
-                                        <div class="template-meta">
-                                            <h4>Flutter App</h4>
-                                            <span class="template-type">Mobile</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">Flutter + Dart + State Management</div>
-                                    <div class="template-tags">
-                                        <span class="tag">Flutter</span>
-                                        <span class="tag">Dart</span>
-                                        <span class="tag">Mobile</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="template-card" data-search="desktop electron react" data-template="desktop" data-language="typescript" data-framework="electron">
-                                    <div class="template-header">
-                                        <div class="template-icon">💻</div>
-                                        <div class="template-meta">
-                                            <h4>Electron App</h4>
-                                            <span class="template-type">Desktop</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">Electron + React + TypeScript</div>
-                                    <div class="template-tags">
-                                        <span class="tag">Electron</span>
-                                        <span class="tag">React</span>
-                                        <span class="tag">Desktop</span>
-                                    </div>
-                                </div>
+                        
+                        <div class="template-row">
+                            <div class="template-item-ultra" data-search="fullstack react nodejs typescript" data-template="fullstack" data-language="typescript" data-framework="react">
+                                <span class="template-icon-ultra">🔄</span>
+                                <span class="template-name-ultra">Full Stack</span>
+                                <span class="template-stack-ultra">React + Node</span>
+                            </div>
+                            <div class="template-item-ultra" data-search="mobile react native typescript" data-template="mobile" data-language="typescript" data-framework="react-native">
+                                <span class="template-icon-ultra">📱</span>
+                                <span class="template-name-ultra">React Native</span>
+                                <span class="template-stack-ultra">TS + Mobile</span>
+                            </div>
+                            <div class="template-item-ultra" data-search="mobile flutter dart" data-template="mobile" data-language="dart" data-framework="flutter">
+                                <span class="template-icon-ultra">🦋</span>
+                                <span class="template-name-ultra">Flutter</span>
+                                <span class="template-stack-ultra">Dart + Mobile</span>
+                            </div>
+                            <div class="template-item-ultra" data-search="desktop electron react" data-template="desktop" data-language="typescript" data-framework="electron">
+                                <span class="template-icon-ultra">💻</span>
+                                <span class="template-name-ultra">Electron</span>
+                                <span class="template-stack-ultra">React + Desktop</span>
                             </div>
                         </div>
-
-                        <div class="category-section">
-                            <h3 class="category-title">Specialized</h3>
-                            <div class="template-grid">
-                                <div class="template-card" data-search="library typescript rollup" data-template="library" data-language="typescript">
-                                    <div class="template-header">
-                                        <div class="template-icon">📦</div>
-                                        <div class="template-meta">
-                                            <h4>TypeScript Library</h4>
-                                            <span class="template-type">Library</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">TypeScript + Rollup + Testing</div>
-                                    <div class="template-tags">
-                                        <span class="tag">TypeScript</span>
-                                        <span class="tag">Rollup</span>
-                                        <span class="tag">Library</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="template-card" data-search="cli nodejs typescript commander" data-template="cli" data-language="typescript">
-                                    <div class="template-header">
-                                        <div class="template-icon">⌨️</div>
-                                        <div class="template-meta">
-                                            <h4>Node.js CLI</h4>
-                                            <span class="template-type">CLI</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">TypeScript + Commander.js + Testing</div>
-                                    <div class="template-tags">
-                                        <span class="tag">Node.js</span>
-                                        <span class="tag">CLI</span>
-                                        <span class="tag">TS</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="template-card" data-search="ai ml python numpy pandas" data-template="ai-ml" data-language="python">
-                                    <div class="template-header">
-                                        <div class="template-icon">🤖</div>
-                                        <div class="template-meta">
-                                            <h4>Python AI/ML</h4>
-                                            <span class="template-type">AI/ML</span>
-                                        </div>
-                                    </div>
-                                    <div class="template-stack">NumPy + Pandas + Scikit-learn</div>
-                                    <div class="template-tags">
-                                        <span class="tag">Python</span>
-                                        <span class="tag">AI/ML</span>
-                                        <span class="tag">Data Science</span>
-                                    </div>
-                                </div>
+                        
+                        <div class="template-row">
+                            <div class="template-item-ultra" data-search="library typescript rollup" data-template="library" data-language="typescript">
+                                <span class="template-icon-ultra">📦</span>
+                                <span class="template-name-ultra">Library</span>
+                                <span class="template-stack-ultra">TS + Rollup</span>
+                            </div>
+                            <div class="template-item-ultra" data-search="cli nodejs typescript commander" data-template="cli" data-language="typescript">
+                                <span class="template-icon-ultra">⌨️</span>
+                                <span class="template-name-ultra">CLI</span>
+                                <span class="template-stack-ultra">TS + Commander</span>
+                            </div>
+                            <div class="template-item-ultra" data-search="ai ml python numpy pandas" data-template="ai-ml" data-language="python">
+                                <span class="template-icon-ultra">🤖</span>
+                                <span class="template-name-ultra">AI/ML</span>
+                                <span class="template-stack-ultra">Python + ML</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- No Results -->
-                    <div class="no-results-pro" id="noResults" style="display: none;">
-                        <div class="no-results-content">
-                            <div class="no-results-icon">🔍</div>
-                            <h3>No results found</h3>
-                            <p>Try searching for different keywords or browse all templates</p>
-                            <button class="clear-search-btn" data-action="clear-search">Clear Search</button>
-                        </div>
+                    <!-- Ultra Compact No Results -->
+                    <div class="no-results-ultra" id="noResults" style="display: none;">
+                        <span class="no-results-text">No results found</span>
+                        <button class="clear-search-btn-ultra" data-action="clear-search">Clear</button>
                     </div>
 
-                    <!-- Professional Footer -->
-                    <div class="footer-professional">
-                        <div class="footer-content">
-                            <div class="footer-links">
-                                <span class="footer-link" data-action="documentation">Documentation</span>
-                                <span class="footer-link">GitHub</span>
-                            </div>
-                            <div class="footer-version">v1.0.0</div>
-                        </div>
+                    <!-- Ultra Compact Footer -->
+                    <div class="footer-ultra">
+                        <span class="footer-link-ultra" data-action="documentation">Docs</span>
+                        <span class="footer-version-ultra">v1.0.0</span>
                     </div>
                 </div>
                 
