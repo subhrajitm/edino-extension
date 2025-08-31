@@ -72,6 +72,10 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                         console.log('Executing createAdvancedProject command');
                         vscode.commands.executeCommand('edino.createAdvancedProject');
                         return;
+                    case 'createAIProject':
+                        console.log('Executing createAIProject command');
+                        vscode.commands.executeCommand('edino.aiSmartProject');
+                        return;
                     case 'showDocumentation':
                         console.log('Executing showDocumentation command');
                         this._showDocumentation();
@@ -131,6 +135,7 @@ export class WelcomePanel implements vscode.WebviewViewProvider {
                         <div class="header-actions">
                             <button class="action-btn primary" data-action="quick">Quick Start</button>
                             <button class="action-btn secondary" data-action="advanced">Advanced</button>
+                            <button class="action-btn ai" data-action="ai">🤖 AI</button>
                         </div>
                     </div>
                     

@@ -48,6 +48,7 @@ const ProjectPreviewManager_1 = require("./core/preview/ProjectPreviewManager");
 const TeamManager_1 = require("./core/team/TeamManager");
 const MarketplaceManager_1 = require("./core/marketplace/MarketplaceManager");
 const logger_1 = require("./utils/logger");
+const aiCommands_1 = require("./commands/aiCommands");
 // Global error handler
 function handleError(error, context) {
     console.error(`❌ Error in ${context}:`, error);
@@ -660,6 +661,9 @@ async function activate(context) {
         // Register webview provider for the sidebar
         const welcomeProvider = new welcomePanel_1.WelcomePanel(context.extensionUri);
         context.subscriptions.push(vscode.window.registerWebviewViewProvider('edino-welcome', welcomeProvider));
+        // Register AI commands
+        const aiCommands = aiCommands_1.AICommands.getInstance();
+        aiCommands.registerCommands(context);
         context.subscriptions.push(showWelcomeDisposable, statusBarItem, showAITemplatesDisposable, showProjectPreviewDisposable, showTeamTemplatesDisposable, showMarketplaceDisposable);
     }
     catch (error) {

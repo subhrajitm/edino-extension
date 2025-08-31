@@ -40,6 +40,8 @@ function initializeEventHandlers() {
                 createProject();
             } else if (action === 'advanced') {
                 createAdvancedProject();
+            } else if (action === 'ai') {
+                createAIProject();
             } else if (action === 'clear-search') {
                 clearSearch();
             }
@@ -98,6 +100,8 @@ function initializeEventHandlers() {
                 createProject();
             } else if (action === 'advanced') {
                 createAdvancedProject();
+            } else if (action === 'ai') {
+                createAIProject();
             } else if (action === 'clear-search') {
                 clearSearch();
             }
@@ -156,6 +160,8 @@ function initializeEventHandlers() {
                 createProject();
             } else if (action === 'advanced') {
                 createAdvancedProject();
+            } else if (action === 'ai') {
+                createAIProject();
             } else if (action === 'clear-search') {
                 clearSearch();
             }
@@ -474,6 +480,33 @@ function createAdvancedProject() {
         const vscode = acquireVsCodeApi();
         vscode.postMessage({
             command: 'createAdvancedProject'
+        });
+    } else {
+        console.error('❌ VSCode API not available');
+    }
+    
+    // Remove loading state after a delay
+    setTimeout(() => {
+        if (container) {
+            container.classList.remove('loading');
+        }
+    }, 2000);
+}
+
+function createAIProject() {
+    console.log('🤖 Creating AI-powered project');
+    
+    // Add loading state
+    const container = document.querySelector('.welcome-container');
+    if (container) {
+        container.classList.add('loading');
+    }
+    
+    // Send message to extension
+    if (typeof acquireVsCodeApi !== 'undefined') {
+        const vscode = acquireVsCodeApi();
+        vscode.postMessage({
+            command: 'createAIProject'
         });
     } else {
         console.error('❌ VSCode API not available');

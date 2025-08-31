@@ -11,6 +11,7 @@ import { ProjectPreviewManager } from './core/preview/ProjectPreviewManager';
 import { TeamManager } from './core/team/TeamManager';
 import { MarketplaceManager } from './core/marketplace/MarketplaceManager';
 import { Logger } from './utils/logger';
+import { AICommands } from './commands/aiCommands';
 
 // Global error handler
 function handleError(error: Error, context: string) {
@@ -735,6 +736,10 @@ export async function activate(context: vscode.ExtensionContext) {
         context.subscriptions.push(
             vscode.window.registerWebviewViewProvider('edino-welcome', welcomeProvider)
         );
+
+        // Register AI commands
+        const aiCommands = AICommands.getInstance();
+        aiCommands.registerCommands(context);
 
         context.subscriptions.push(
             showWelcomeDisposable, 

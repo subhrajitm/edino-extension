@@ -70,6 +70,31 @@
         "command": "edino.showMarketplace",
         "title": "Show Template Marketplace",
         "category": "Edino"
+      },
+      {
+        "command": "edino.aiRecommendations",
+        "title": "AI Project Recommendations",
+        "category": "Edino"
+      },
+      {
+        "command": "edino.aiSmartProject",
+        "title": "AI Smart Project Creation",
+        "category": "Edino"
+      },
+      {
+        "command": "edino.aiCustomization",
+        "title": "AI Project Customization",
+        "category": "Edino"
+      },
+      {
+        "command": "edino.aiTechStack",
+        "title": "AI Tech Stack Suggestions",
+        "category": "Edino"
+      },
+      {
+        "command": "edino.aiProjectNames",
+        "title": "AI Project Name Suggestions",
+        "category": "Edino"
       }
     ],
     "menus": {
@@ -104,6 +129,26 @@
         {
           "command": "edino.showMarketplace",
           "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "edino.aiRecommendations",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "edino.aiSmartProject",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "edino.aiCustomization",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "edino.aiTechStack",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "edino.aiProjectNames",
+          "when": "workspaceFolderCount > 0"
         }
       ],
       "view/title": [
@@ -135,7 +180,7 @@
     "viewsWelcome": [
       {
         "view": "edino-welcome",
-        "contents": "Welcome to Edino Project Generator!\n\n[Create New Project](command:edino.createProject)\n[Create Advanced Project](command:edino.createAdvancedProject)\n[AI Templates](command:edino.showAITemplates)\n[Project Preview](command:edino.showProjectPreview)\n[Team Templates](command:edino.showTeamTemplates)\n[Marketplace](command:edino.showMarketplace)\n\nQuick Start:\n• Frontend: React applications\n• Backend: Node.js APIs\n• Full Stack: Complete applications\n• 20+ Languages supported\n\n[View Documentation](command:edino.showWelcome)"
+        "contents": "Welcome to Edino Project Generator!\n\n[Create New Project](command:edino.createProject)\n[Create Advanced Project](command:edino.createAdvancedProject)\n[🤖 AI Smart Project](command:edino.aiSmartProject)\n[AI Recommendations](command:edino.aiRecommendations)\n[AI Customization](command:edino.aiCustomization)\n[AI Tech Stack](command:edino.aiTechStack)\n[AI Project Names](command:edino.aiProjectNames)\n[Project Preview](command:edino.showProjectPreview)\n[Team Templates](command:edino.showTeamTemplates)\n[Marketplace](command:edino.showMarketplace)\n\nQuick Start:\n• Frontend: React applications\n• Backend: Node.js APIs\n• Full Stack: Complete applications\n• 20+ Languages supported\n• AI-powered recommendations\n\n[View Documentation](command:edino.showWelcome)"
       }
     ],
     "welcomePage": {
