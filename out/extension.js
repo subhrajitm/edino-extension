@@ -100,7 +100,7 @@ async function activate(context) {
                         isFolderSelected = true;
                     }
                 }
-                // If no folder is selected, use workspace root or ask for project name
+                // If no folder is selected, give user choice between root folder or new project name
                 if (!selectedFolderPath) {
                     // Check if workspace root has content (indicating it's a project folder)
                     const workspaceContents = await fs.readdir(workspaceFolder.uri.fsPath);
@@ -115,32 +115,106 @@ async function activate(context) {
                         file === 'README.md' ||
                         file === '.gitignore');
                     if (hasProjectFiles) {
-                        // Workspace root appears to be a project folder, use it
-                        selectedFolderPath = workspaceFolder.uri.fsPath;
-                        projectName = workspaceFolder.name;
-                        isFolderSelected = true;
-                    }
-                    else {
-                        // Ask user for project name to create in workspace root
-                        const inputProjectName = await vscode.window.showInputBox({
-                            prompt: 'What would you like to name your project? (will be created in workspace root)',
-                            placeHolder: 'my-awesome-project',
-                            value: 'my-awesome-project',
-                            validateInput: (value) => {
-                                if (!value) {
-                                    return 'Project name is required';
-                                }
-                                if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
-                                    return 'Project name can only contain letters, numbers, hyphens, and underscores';
-                                }
-                                return null;
+                        // Workspace root appears to be a project folder, ask user what to do
+                        const folderChoice = await vscode.window.showQuickPick([
+                            {
+                                label: '📁 Use Current Folder',
+                                description: `Use the workspace root folder (${workspaceFolder.name})`,
+                                detail: 'Generate project files directly in the current workspace',
+                                value: 'use_current'
+                            },
+                            {
+                                label: '🆕 Create New Folder',
+                                description: 'Create a new subfolder for the project',
+                                detail: 'Ask for project name and create a new folder',
+                                value: 'create_new'
                             }
+                        ], {
+                            placeHolder: 'Choose where to create your project:',
+                            ignoreFocusOut: true
                         });
-                        if (!inputProjectName) {
+                        if (!folderChoice) {
                             return;
                         }
-                        projectName = inputProjectName;
-                        selectedFolderPath = path.join(workspaceFolder.uri.fsPath, projectName);
+                        if (folderChoice.value === 'use_current') {
+                            // Use workspace root
+                            selectedFolderPath = workspaceFolder.uri.fsPath;
+                            projectName = workspaceFolder.name;
+                            isFolderSelected = true;
+                        }
+                        else {
+                            // Create new folder
+                            const inputProjectName = await vscode.window.showInputBox({
+                                prompt: 'What would you like to name your project? (will be created in workspace root)',
+                                placeHolder: 'my-awesome-project',
+                                value: 'my-awesome-project',
+                                validateInput: (value) => {
+                                    if (!value) {
+                                        return 'Project name is required';
+                                    }
+                                    if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
+                                        return 'Project name can only contain letters, numbers, hyphens, and underscores';
+                                    }
+                                    return null;
+                                }
+                            });
+                            if (!inputProjectName) {
+                                return;
+                            }
+                            projectName = inputProjectName;
+                            selectedFolderPath = path.join(workspaceFolder.uri.fsPath, projectName);
+                        }
+                    }
+                    else {
+                        // Empty workspace, give user choice
+                        const folderChoice = await vscode.window.showQuickPick([
+                            {
+                                label: '📁 Use Root Folder',
+                                description: 'Generate project files directly in workspace root',
+                                detail: 'No subfolder will be created',
+                                value: 'use_root'
+                            },
+                            {
+                                label: '🆕 Create Project Folder',
+                                description: 'Create a new subfolder for the project',
+                                detail: 'Ask for project name and create a new folder',
+                                value: 'create_folder'
+                            }
+                        ], {
+                            placeHolder: 'Choose where to create your project:',
+                            ignoreFocusOut: true
+                        });
+                        if (!folderChoice) {
+                            return;
+                        }
+                        if (folderChoice.value === 'use_root') {
+                            // Use workspace root
+                            selectedFolderPath = workspaceFolder.uri.fsPath;
+                            projectName = workspaceFolder.name;
+                            isFolderSelected = true;
+                        }
+                        else {
+                            // Create new folder
+                            const inputProjectName = await vscode.window.showInputBox({
+                                prompt: 'What would you like to name your project? (will be created in workspace root)',
+                                placeHolder: 'my-awesome-project',
+                                value: 'my-awesome-project',
+                                validateInput: (value) => {
+                                    if (!value) {
+                                        return 'Project name is required';
+                                    }
+                                    if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
+                                        return 'Project name can only contain letters, numbers, hyphens, and underscores';
+                                    }
+                                    return null;
+                                }
+                            });
+                            if (!inputProjectName) {
+                                return;
+                            }
+                            projectName = inputProjectName;
+                            selectedFolderPath = path.join(workspaceFolder.uri.fsPath, projectName);
+                        }
                     }
                 }
                 // Determine project type based on template selection or user choice
@@ -300,7 +374,7 @@ async function activate(context) {
                         isFolderSelected = true;
                     }
                 }
-                // If no folder is selected, use workspace root or ask for project name
+                // If no folder is selected, give user choice between root folder or new project name
                 if (!selectedFolderPath) {
                     // Check if workspace root has content (indicating it's a project folder)
                     const workspaceContents = await fs.readdir(workspaceFolder.uri.fsPath);
@@ -315,32 +389,106 @@ async function activate(context) {
                         file === 'README.md' ||
                         file === '.gitignore');
                     if (hasProjectFiles) {
-                        // Workspace root appears to be a project folder, use it
-                        selectedFolderPath = workspaceFolder.uri.fsPath;
-                        projectName = workspaceFolder.name;
-                        isFolderSelected = true;
-                    }
-                    else {
-                        // Ask user for project name to create in workspace root
-                        const inputProjectName = await vscode.window.showInputBox({
-                            prompt: 'What would you like to name your project? (will be created in workspace root)',
-                            placeHolder: 'my-awesome-project',
-                            value: 'my-awesome-project',
-                            validateInput: (value) => {
-                                if (!value) {
-                                    return 'Project name is required';
-                                }
-                                if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
-                                    return 'Project name can only contain letters, numbers, hyphens, and underscores';
-                                }
-                                return null;
+                        // Workspace root appears to be a project folder, ask user what to do
+                        const folderChoice = await vscode.window.showQuickPick([
+                            {
+                                label: '📁 Use Current Folder',
+                                description: `Use the workspace root folder (${workspaceFolder.name})`,
+                                detail: 'Generate project files directly in the current workspace',
+                                value: 'use_current'
+                            },
+                            {
+                                label: '🆕 Create New Folder',
+                                description: 'Create a new subfolder for the project',
+                                detail: 'Ask for project name and create a new folder',
+                                value: 'create_new'
                             }
+                        ], {
+                            placeHolder: 'Choose where to create your project:',
+                            ignoreFocusOut: true
                         });
-                        if (!inputProjectName) {
+                        if (!folderChoice) {
                             return;
                         }
-                        projectName = inputProjectName;
-                        selectedFolderPath = path.join(workspaceFolder.uri.fsPath, projectName);
+                        if (folderChoice.value === 'use_current') {
+                            // Use workspace root
+                            selectedFolderPath = workspaceFolder.uri.fsPath;
+                            projectName = workspaceFolder.name;
+                            isFolderSelected = true;
+                        }
+                        else {
+                            // Create new folder
+                            const inputProjectName = await vscode.window.showInputBox({
+                                prompt: 'What would you like to name your project? (will be created in workspace root)',
+                                placeHolder: 'my-awesome-project',
+                                value: 'my-awesome-project',
+                                validateInput: (value) => {
+                                    if (!value) {
+                                        return 'Project name is required';
+                                    }
+                                    if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
+                                        return 'Project name can only contain letters, numbers, hyphens, and underscores';
+                                    }
+                                    return null;
+                                }
+                            });
+                            if (!inputProjectName) {
+                                return;
+                            }
+                            projectName = inputProjectName;
+                            selectedFolderPath = path.join(workspaceFolder.uri.fsPath, projectName);
+                        }
+                    }
+                    else {
+                        // Empty workspace, give user choice
+                        const folderChoice = await vscode.window.showQuickPick([
+                            {
+                                label: '📁 Use Root Folder',
+                                description: 'Generate project files directly in workspace root',
+                                detail: 'No subfolder will be created',
+                                value: 'use_root'
+                            },
+                            {
+                                label: '🆕 Create Project Folder',
+                                description: 'Create a new subfolder for the project',
+                                detail: 'Ask for project name and create a new folder',
+                                value: 'create_folder'
+                            }
+                        ], {
+                            placeHolder: 'Choose where to create your project:',
+                            ignoreFocusOut: true
+                        });
+                        if (!folderChoice) {
+                            return;
+                        }
+                        if (folderChoice.value === 'use_root') {
+                            // Use workspace root
+                            selectedFolderPath = workspaceFolder.uri.fsPath;
+                            projectName = workspaceFolder.name;
+                            isFolderSelected = true;
+                        }
+                        else {
+                            // Create new folder
+                            const inputProjectName = await vscode.window.showInputBox({
+                                prompt: 'What would you like to name your project? (will be created in workspace root)',
+                                placeHolder: 'my-awesome-project',
+                                value: 'my-awesome-project',
+                                validateInput: (value) => {
+                                    if (!value) {
+                                        return 'Project name is required';
+                                    }
+                                    if (!/^[a-zA-Z0-9-_]+$/.test(value)) {
+                                        return 'Project name can only contain letters, numbers, hyphens, and underscores';
+                                    }
+                                    return null;
+                                }
+                            });
+                            if (!inputProjectName) {
+                                return;
+                            }
+                            projectName = inputProjectName;
+                            selectedFolderPath = path.join(workspaceFolder.uri.fsPath, projectName);
+                        }
                     }
                 }
                 // Show template selection with better organization
